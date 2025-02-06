@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viking Exit Game</title>
+    <link rel="stylesheet" href="static/style2.css">
+</head>
+<!-- Beispiel: Einbindung von "Caveat" -->
+<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+<body>
+    <div class="image-container">
+        <div class="image-wrapper">
+            <img src="static/images/Exitgame_Wikinger.png" alt="Viking Hall">
+
+            <div id="popup-overlay" class="popup-overlay"></div>
+
+                <!-- Unsichtbare Hotspots -->
+            <div id="hotspot-1" class="hotspot" onclick="revealImage('image1-container')"></div>
+            <div id="hotspot-2" class="hotspot" onclick="revealImage('image2-container')"></div>
+            <div id="hotspot-3" class="hotspot" onclick="revealImage('image3-container')"></div>
+            <div id="hotspot-4" class="hotspot" onclick="revealImage('image4-container')"></div>
+            <div id="hotspot-5" class="hotspot" onclick="revealImage('image5-container')"></div>
+
+            <div id="image1-container" class="popup">
+                <button class="close-btn" onclick="closeImage('image1-container')">&times;</button>
+                <img src="/static/images/hint_steintafel.png" alt="Image 1">
+            </div>
+
+            <div id="image2-container" class="popup">
+                <button class="close-btn" onclick="closeImage('image2-container')">&times;</button>
+                <img src="/static/images/hint_steintafel.png" alt="Image 2">
+            </div>
+
+            <div id="image3-container" class="popup">
+                <button class="close-btn" onclick="closeImage('image3-container')">&times;</button>
+                <img src="/static/images/hint_schiffskarte.png" alt="Image 3">
+            </div>
+
+            <div id="image4-container" class="popup">
+                <button class="close-btn" onclick="closeImage('image4-container')">&times;</button>
+                <img src="/static/images/balkentest.png" alt="Image 4">
+            </div>
+
+            <div id="image5-container" class="popup">
+                <button class="close-btn" onclick="closeImage('image5-container')">&times;</button>
+                <img src="/static/images/goldmünzen.png" alt="Image 5">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Code-Eingabe außerhalb des Containers -->
+    <div class="code-container">
+        <p>Enter the 3-digit code to unlock the secret:</p>
+        <div class="code-input">
+            <input type="text" id="code-digit-1" maxlength="1" oninput="checkDigit(1)">
+            <input type="text" id="code-digit-2" maxlength="1" disabled oninput="checkDigit(2)">
+            <input type="text" id="code-digit-3" maxlength="1" disabled oninput="checkDigit(3)">
+        </div>
+        <p id="code-feedback"></p>
+    </div>
+
+    <!-- Avatar-Bild und Chat-Container -->
+    <div class="avatar-container">
+        <img src="/static/images/avatar.png" alt="Avatar" class="avatar-image" onclick="toggleChat()">
+        <div class="chat-container" id="chat-container">
+            <div class="chatbox" id="chat-window"></div>
+            <!-- Beispiel-Nachrichten -->
+                <div class="message bot">
+                </div>
+                <div class="message user">
+                </div>
+            <input type="text" id="chat-input" placeholder="Type your message...">
+        </div>
+    </div>
+
+    <!-- Schriftrolle und Popup -->
+    <div class="scroll-container">
+        <img src="/static/images/schriftrolle.png" alt="Schriftrolle" class="scroll-image" onclick="openScrollPopup()">
+    </div>
+
+    <!-- Popup für die Schriftrolle -->
+    <div class="popup" id="scroll-popup">
+        <div class="close-btn" onclick="closeScrollPopup()">×</div>
+        <!--<img src="/static/images/pergament.png" alt="Schriftrolleninhalt">-->
+        <div class="scroll-text">
+            <p>In den tiefen der Zeit, wo die Geschichten der Wikinger in Stein, Holz und Gold verewigt sind, liegt der Schlüssel verborgen.
+            Die Runen, alt wie die Welten selbst, flüstern von vergessenen Wahrheiten.<br>
+            Die Pfade, die zwischen den Reichen der Götter schweben - von Asgard, der Heimat der Götter, über Jotunheim, das Land der Riesen,
+            bis hinab nach Svartalfheim, dem Reich der Schatten - tragen das Echo uralter Geheimnisse.<br>
+            In den Schätzen ruht die Macht des Donners - ein Zeichen, das nur diejenigen erkennen, die das Auge des Weisen besitzen.</p>
+        </div>
+    </div>
+    <div class="popup-overlay" id="scroll-popup-overlay"></div>
+
+
+    <script src="static/script2.js"></script>
+</body>
+</html>
