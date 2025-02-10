@@ -1,0 +1,220 @@
+body {
+    font-family: 'Caveat', cursive, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Container für das Bild */
+.image-container {
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 100%;
+    box-sizing: border-box;
+    position: relativ;
+}
+
+.image-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image-wrapper img {
+    width: 70%;
+    height: 90%;
+    object-fit: fill; /* Bild wird so skaliert, dass es den gesamten Bereich abdeckt */
+    position: fixed;
+    top: 0;
+    bottom: 15;
+    left: 25%;
+    right: 1%;
+    z-index: -1; /* Hintergrundbild */
+}
+
+/* Code-Eingabe */
+.code-container {
+    position: absolute;
+    bottom: 3%;
+    left: 60%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+}
+
+.code-container input {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+#check-button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#check-button:hover {
+    background-color: #0056b3;
+}
+
+/* Avatar- und Chat-Container */
+.avatar-container {
+    position: fixed;
+    bottom: 4%;
+    left: 1%;
+    z-index: 1000;
+
+}
+
+.avatar-image {
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.avatar-image:hover {
+    transform: scale(1.1);
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 5%;
+    left: 6%;
+    width: 18%;
+    height: 90%;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0) transparent;
+}
+
+.chatbox {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background: transparent;
+}
+
+.message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.message.user {
+    align-items: flex-end;
+}
+
+.message p {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.message.user p {
+    background-color: #007BFF;
+    color: white;
+}
+
+.message.bot p {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+/* Eingabefeld für den Chat */
+#chat-input {
+    padding: 10px;
+    width: calc(100% - 20px);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.9); /* Transparenter Hintergrund */
+}
+/* Unsichtbare Klickflächen für Hinweise */
+.hint-area {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9); /* Vollständig transparent */
+    cursor: pointer;
+    z-index: 1000; /* Über dem Bild */
+}
+
+/* Stile für Popups und andere Elemente bleiben unverändert */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 30%;
+    width: 60%;
+    height: 60%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.popup-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 5px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close:hover {
+    color: #000;
+}
+/* Mobile Anpassungen */
+@media (max-width: 768px) {
+    .image-wrapper img {
+        width: 100%;
+        height: auto;
+    }
+
+    .chat-container {
+        width: 80%;
+        left: 5%;
+        bottom: 5%;
+    }
+}

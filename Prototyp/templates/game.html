@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de"> <!-- Sprache auf Deutsch geändert -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viking Exit Game</title>
+    <!-- Einbindung von "Caveat" -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/game.css"> <!-- CSS verlinken -->
+</head>
+<body>
+    <!-- Bildcontainer -->
+    <div class="image-container">
+        <div class="image-wrapper">
+            <img src="static/images/Exitgame_Neu.png" alt="Viking Hall">
+            <!-- Unsichtbare Klickflächen für Hinweise -->
+            <div class="hint-area" id="hint1-area" style="bottom: 11%; left: 45%; width: 27%; height: 13%;"></div>
+            <div class="hint-area" id="hint2-area" style="bottom: 25%; left: 50%; width: 17%; height: 5%;"></div>
+            <div class="hint-area" id="hint3-area" style="bottom: 48%; left: 50%; width: 18%; height: 28%;"></div>
+        </div>
+    </div>
+
+    <!-- Code-Eingabe -->
+    <div class="code-container">
+        <div id="code-input">
+            <!-- Eingabefelder für den Code -->
+            <input type="text" id="code-digit-1" maxlength="2">
+            <input type="text" id="code-digit-2" maxlength="2" disabled>
+            <input type="text" id="code-digit-3" maxlength="2" disabled>
+            <!-- Checken-Button -->
+            <button id="check-button">Checken</button>
+        </div>
+        <!-- Feedback-Nachricht -->
+        <div id="code-feedback"></div>
+    </div>
+
+    <!-- Avatar-Bild und Chat-Container -->
+    <div class="avatar-container">
+        <img src="/static/images/avatar.png" alt="Avatar" class="avatar-image">
+        <div class="chat-container" id="chat-container">
+            <div class="chatbox" id="chat-window">
+                <!-- Hier werden die Chat-Nachrichten dynamisch eingefügt -->
+            </div>
+            <input type="text" id="chat-input" placeholder="Type your message...">
+        </div>
+    </div>
+    <!-- Overlay für Popups -->
+    <div id="popup-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 999;"></div>
+
+    <!-- Popups für Hinweise -->
+    <div id="hint1-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/steintafel_neu.png" alt="Hinweis 1">
+        </div>
+    </div>
+
+    <div id="hint2-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/balkentest.png" alt="Hinweis 2">
+        </div>
+    </div>
+
+    <div id="hint3-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 3">
+        </div>
+    </div>
+
+    <div id="hint4-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 4">
+        </div>
+    </div>
+
+    <div id="hint5-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 5">
+        </div>
+    </div>
+
+    <div id="hint6-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 6">
+        </div>
+    </div>
+
+    <div id="hint7-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 7">
+        </div>
+    </div>
+
+    <div id="hint8-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 8">
+        </div>
+    </div>
+
+    <div id="hint9-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <img src="static/images/hint_schiffskarte.png" alt="Hinweis 9">
+        </div>
+    </div>
+
+    <!-- JavaScript einbinden -->
+    <script src="static/game.js"></script>
+</body>
+</html>
