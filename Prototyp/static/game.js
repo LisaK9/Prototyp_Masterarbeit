@@ -108,6 +108,7 @@ function toggleChat() {
 function sendMessage() {
     const chatInput = document.getElementById('chat-input');
     const chatWindow = document.getElementById('chat-window');
+    const loadingDots = document.getElementById('loading-dots');
     const userMessage = chatInput.value.trim();
 
     if (!userMessage) return;  // Keine Nachricht senden, wenn das Eingabefeld leer ist
@@ -121,6 +122,9 @@ function sendMessage() {
     chatInput.value = '';  // Eingabefeld leeren
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
+    // Ladeanimation anzeigen
+    loadingDots.style.display = 'flex';
+
     // Nachricht an den Chatbot senden
     fetch('/chat', {
         method: 'POST',
@@ -129,6 +133,8 @@ function sendMessage() {
     })
     .then(response => response.json())
     .then(data => {
+        // Ladeanimation ausblenden
+        loadingDots.style.display = 'none';
         // Antwort des Chatbots im Chatfenster anzeigen
         const botMessageElement = document.createElement('div');
         botMessageElement.classList.add('message', 'bot');

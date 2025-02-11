@@ -80,16 +80,16 @@ body {
 /* Avatar- und Chat-Container */
 .avatar-container {
     position: fixed;
-    bottom: 4%;
-    left: 1%;
+    bottom: 5%;
+    left: 0.5%;
     width: 25%;
     z-index: 1000;
 
 }
 
 .avatar-image {
-    width: 25%;
-    height: 25%;
+    width: 30%;
+    height: 30%;
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -148,6 +148,38 @@ body {
 .message.bot p {
     background-color: #f1f1f1;
     color: black;
+}
+
+/* Stile für die Ladeanimation */
+.loading-dots {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    /*padding: 10px;*/
+    font-size: 24px;
+    color: white;
+}
+
+.loading-dots span {
+    opacity: 0;
+    animation: blink 1.4s infinite;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 /* Eingabefeld für den Chat */
@@ -334,6 +366,7 @@ body {
     font-size: 24px;
     cursor: pointer;
     color: #333;
+    font-weight: bold;
 }
 
 .custom-close:hover {
@@ -343,12 +376,14 @@ body {
 .close {
     position: absolute;
     top: 10px;
-    right: 15px;
-    font-size: 24px;
+    right: 10px;
+    font-size: 36px;
     cursor: pointer;
-    color: #333;
+    color: white;
     width: 20%;
     height:20%;
+    font-weight: bold;
+    border-radius: 20%;
 }
 
 .close:hover {
