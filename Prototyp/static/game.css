@@ -82,6 +82,7 @@ body {
     position: fixed;
     bottom: 4%;
     left: 1%;
+    width: 25%;
     z-index: 1000;
 
 }
@@ -160,8 +161,8 @@ body {
 /* Unsichtbare Klickflächen für Hinweise */
 .hint-area {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.9); /* Vollständig transparent */
-    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0); /* Vollständig transparent */
+    cursor: default;
     z-index: 1000; /* Über dem Bild */
 }
 
@@ -169,10 +170,13 @@ body {
 .popup {
     display: none;
     position: fixed;
-    top: 0;
-    left: 30%;
-    width: 60%;
-    height: 60%;
+    /*top: 0;
+    left: 30%;*/
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0);
     z-index: 1000;
     justify-content: center;
@@ -181,16 +185,72 @@ body {
 
 .popup-content {
     background-color: transparent;
-    padding: 20px;
+    padding: 1%;
     border-radius: 10px;
     position: relative;
     text-align: center;
+    justify-content: center; /* Zentriert den Inhalt horizontal */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+    display: flex;
+    top: 45%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 90%;
+
 }
 
 .popup-content img {
     max-width: 100%;
-    max-height: 80vh;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     border-radius: 5px;
+    object-fit: contain;
+    display: block;
+
+}
+
+/* Stile für das Schriftrollen-Popup */
+.scroll-popup {
+    position: relative;
+    background: transparent; /* Transparenter Hintergrund für das Popup */
+    padding: 0;
+    box-shadow: none;
+}
+
+.scroll-container {
+    position: relative;
+    display: inline-block; /* Container passt sich der Textgröße an */
+    max-width: 100%; /* Maximale Breite begrenzen */
+}
+.scroll-image {
+    width: auto; /* Bild passt sich der Breite des Popups an */
+    height: auto; /* Höhe passt sich automatisch an */
+    /*position: absolute; /* Bild als Hintergrund positionieren */
+    /*z-index: -1; /* Bild hinter dem Text platzieren */
+    display: block;
+}
+
+.scroll-text {
+    /*position: relative; /* Text über dem Bild positionieren */
+    position: absolute;
+    /*z-index:1;
+    font-family: 'Caveat', cursive; /* Schriftart für den Text */
+    font-size: 12px; /* Standard-Schriftgröße */
+    color: #000; /* Textfarbe */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Text exakt zentrieren */
+    white-space: pre-wrap; /* Zeilenumbrüche beibehalten */
+    word-wrap: break-word; /* Lange Wörter umbrechen */
+    /*padding: 40px 60px; /* Innenabstand für den Text */
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom:2%;
+    /*text-align: center;*/
+    max-width: 80%;
 }
 
 .close {
@@ -200,6 +260,8 @@ body {
     font-size: 24px;
     cursor: pointer;
     color: #333;
+    width: 20%;
+    height:20%;
 }
 
 .close:hover {

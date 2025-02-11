@@ -1,0 +1,61 @@
+/* Sicherstellen, dass der gesamte Inhalt auf eine Bildschirmhöhe passt */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Scrollen verhindern */
+}
+
+.intro-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.intro-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Bild skaliert auf gesamte Fläche */
+}
+
+.intro-text {
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3); /* Halbtransparenter Hintergrund für bessere Lesbarkeit */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.start-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #fff;
+    background: linear-gradient(45deg, #ff6600, #cc3300);
+    text-decoration: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.start-button:hover {
+    background: linear-gradient(45deg, #cc3300, #ff6600);
+    transform: scale(1.05);
+}

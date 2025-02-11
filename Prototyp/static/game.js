@@ -21,14 +21,15 @@ function updateHintAreas(currentRiddle) {
     } else if (currentRiddle === 2) {
         // Aktiviere Hinweis 3 für Rätsel 2
         document.getElementById('hint3-area').style.pointerEvents = 'auto';
-    }
+    } else if (currentRiddle ===3){
     // Für Rätsel 3 werden keine Hinweise aktiviert
-    document.getElementById('hint4-area').style.pointerEvents = 'auto';
-    document.getElementById('hint5-area').style.pointerEvents = 'auto';
-    document.getElementById('hint6-area').style.pointerEvents = 'auto';
-    document.getElementById('hint7-area').style.pointerEvents = 'auto';
-    document.getElementById('hint8-area').style.pointerEvents = 'auto';
-    document.getElementById('hint9-area').style.pointerEvents = 'auto';
+        document.getElementById('hint4-area').style.pointerEvents = 'auto';
+        document.getElementById('hint5-area').style.pointerEvents = 'auto';
+        document.getElementById('hint6-area').style.pointerEvents = 'auto';
+        document.getElementById('hint7-area').style.pointerEvents = 'auto';
+        document.getElementById('hint8-area').style.pointerEvents = 'auto';
+        document.getElementById('hint9-area').style.pointerEvents = 'auto';
+    }
 }
 
 // Beim Laden der Seite die Klickbarkeit der Hinweise initialisieren
