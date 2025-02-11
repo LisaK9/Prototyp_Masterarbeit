@@ -153,6 +153,30 @@ document.querySelectorAll('.hint-area').forEach(hintArea => {
     });
 });
 
+// Event-Listener für das Schriftrollen-Bild
+document.querySelector('.scroll-icon').addEventListener('click', function() {
+    const popup = document.getElementById('custom-scroll-popup');
+    if (popup) {
+        popup.style.display = 'flex'; // Popup anzeigen
+    }
+});
+
+// Event-Listener für das Schließen des Popups
+document.querySelector('#custom-scroll-popup .custom-close').addEventListener('click', function() {
+    const popup = document.getElementById('custom-scroll-popup');
+    if (popup) {
+        popup.style.display = 'none'; // Popup ausblenden
+    }
+});
+
+// Schließe das Popup, wenn außerhalb geklickt wird
+window.addEventListener('click', function(event) {
+    const popup = document.getElementById('custom-scroll-popup');
+    if (event.target === popup) {
+        popup.style.display = 'none'; // Popup ausblenden
+    }
+});
+
 document.querySelectorAll('.close').forEach(closeButton => {
     closeButton.addEventListener('click', function() {
         const popup = this.closest('.popup');

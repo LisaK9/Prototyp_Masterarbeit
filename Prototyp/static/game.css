@@ -158,6 +158,24 @@ body {
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.9); /* Transparenter Hintergrund */
 }
+
+/* Stile für das Schriftrollen-Bild */
+.scroll-icon {
+    position: fixed;
+    bottom: 1%;
+    right: 5%;
+    width: 50px; /* Passe die Größe nach Bedarf an */
+    height: 50px; /* Passe die Größe nach Bedarf an */
+    cursor: pointer;
+    z-index: 1000; /* Stelle sicher, dass es über anderen Elementen liegt */
+}
+
+.scroll-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Stelle sicher, dass das Bild korrekt skaliert wird */
+}
+
 /* Unsichtbare Klickflächen für Hinweise */
 .hint-area {
     position: absolute;
@@ -217,6 +235,9 @@ body {
     background: transparent; /* Transparenter Hintergrund für das Popup */
     padding: 0;
     box-shadow: none;
+    top: 40%;
+    left: 35%;
+    transform: translate(-50%, -50%); /* Zentrierung */
 }
 
 .scroll-container {
@@ -251,6 +272,72 @@ body {
     padding-bottom:2%;
     /*text-align: center;*/
     max-width: 80%;
+}
+
+/* Stile für das neue Popup */
+.custom-popup {
+    display: none; /* Popup ist standardmäßig ausgeblendet */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dunkler Hintergrund */
+    z-index: 1001; /* Über anderen Elementen */
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-popup-content {
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%); /* Zentrierung */
+    text-align: center;
+}
+
+.custom-scroll-container {
+    position: relative;
+    display: inline-block; /* Container passt sich der Textgröße an */
+    max-width: 100%; /* Maximale Breite begrenzen */
+}
+
+.custom-scroll-image {
+    width: auto; /* Bild passt sich der Breite des Textes an */
+    height: auto; /* Höhe passt sich automatisch an */
+    display: block;
+}
+
+.custom-scroll-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Text exakt zentrieren */
+    white-space: pre-wrap; /* Zeilenumbrüche beibehalten */
+    word-wrap: break-word; /* Lange Wörter umbrechen */
+    /*padding: 20px; /* Innenabstand für den Text */
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 12%;
+    padding-bottom:5%;
+    text-align: center;
+    font-family: 'Caveat', cursive; /* Schriftart für den Text */
+    font-size: 18px; /* Standard-Schriftgröße */
+    color: #000; /* Textfarbe */
+}
+
+.custom-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.custom-close:hover {
+    color: #000;
 }
 
 .close {
