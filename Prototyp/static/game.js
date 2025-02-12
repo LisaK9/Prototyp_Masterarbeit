@@ -270,9 +270,9 @@ function sendChatbotFeedback(riddleNumber) {
 
     // Definiere die Feedback-Nachrichten für jedes Rätsel
     const feedbackMessages = {
-        1: "Gut gemacht! Du hast das erste Rätsel gelöst. Die Wikinger wären stolz auf dich!",
-        2: "Fantastisch! Das zweite Rätsel ist gelöst. Du kommst der Schatzkammer immer näher!",
-        3: "Herzlichen Glückwunsch! Du hast das letzte Rätsel gelöst. Der Schatz gehört jetzt dir!"
+        1: "Hah! Du hast die Zeichen der Ahnen verstanden! Diese Runen sind älter als meine Großmutter – und glaub mir, sie war alt wie die Berge! Nur die Klugen und Weisen erkennen das verborgene Muster. Ich spüre, dass du den Geist eines echten Skalden in dir trägst! Doch noch ist dein Weg nicht beendet. Dein nächster Schritt führt dich auf eine Reise durch die Welten. Mach dich bereit – keine Fahrt verläuft ohne Sturm!“",
+        2: "Fantastisch! Du hast den verborgenen Pfad gesehen! So wie einst meine Vorfahren die Meere mit ihren Drachenbooten durchquerten, hast du die richtige Route gefunden. Ich erinnere mich an die Geschichten am Feuer – von Kriegern, die den Weg durch die Welten kannten. Du hast ihre Spur erkannt! Doch sei auf der Hut... Die größten Geheimnisse sind nicht in Stein gemeißelt, sondern verbergen sich oft im Glanz des Goldes. Und Gold kann trügen!",
+        3: "Bei Mjölnirs Zorn! Du hast es geschafft! Odin selbst würde dir auf die Schulter klopfen – und glaub mir, das ist eine Ehre, die nicht vielen zuteilwird! Du hast die Zeichen gesehen, die Hinweise entschlüsselt und den Weg der Götter verstanden. Das Blut der Nordmänner fließt durch deine Adern, das spüre ich! Doch sei gewarnt – mit Wissen kommt Verantwortung. Die Wahrheit, die du gleich erfahren wirst, ist mächtig. Stelle dich ihr mit Ehre und Mut und öffne die Truhe!"
     };
 
     // Ladeanimation anzeigen
