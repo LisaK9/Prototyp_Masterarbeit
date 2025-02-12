@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 # Der richtige Code
-correctCode = [9, 2, 6]
+correctCode = [9, 2, 21]
 
 @app.route("/")
 def index():
@@ -71,28 +71,45 @@ def chat():
 
     if current_riddle == 1:
         system_message += (
-            " Der Spieler arbeitet an Rätsel 1: Die Runen. "
-            "Der Spieler erhält folgende Information: In den tiefen der Zeit, wo die Geschichten der Wikinger in Stein, Holz und Gold verewigt sind, liegt der Schlüssel verborgen. Die Runen, alt wie die Welten selbst, flüstern von vergessenen Wahrheiten."
-            "Ziel: Die Runen müssen entschlüsselt werden, was die erste Zahl des Codes ist."
+            " Der Spieler arbeitet an Rätsel 1."
+            "Der Spieler erhält folgende Information: In den Tiefen der Zeit, wo die Geschichten der Wikinger in Stein und Holz verewigt sind, ruhen verborgene Wahrheiten."
             "Lösung: 9 oder neun"
-            "Beispielhinweise: Runen-Alphabet, Runen-Entschlüsselung, Runen finden, die entschlüsselt werden sollen, Hinweis beachten, dass Wikinger in Stein, Gold und Holz verewigen"
-            "Wenn der Spieler die Runen, die übersetzt werden müssen gefunden hat, aber nicht weiß, welche er übersetzen soll, gib einen Hinweis auf Punkte."
+            "Hinweis 1: Verweise auf die bereits vorhandene Information und erinnere daran, dass nach versteckten Zeichen in Holz und Stein geachtet werden soll."
+            "Hinweis 2: Es muss ein Runen-Alphabet gefunden werden"
+            "Hinweis 3: Es müssen versteckte Runen gefunden werden, die mittels des Runen-Alphabets übersetzt werden müssen"
+            "Hinweis 4: Die Runen, die übersetzt werden müssen, sind mit einem verborgenen Muster versehen. Dieses sollte genauer angeschaut werden"
+            "Hinweis 5: Es sollte auf die Größe und Häufigkeit der Punkte bei den Runen geachtet werden. Diese weisen den Weg, welche Runen entschlüsselt werden müssen."
+
         )
     elif current_riddle == 2:
         system_message += (
-            "Der Spieler arbeitet an Rätsel 2: Die Schiffskarte der neun Welten."
-            "Der Spieler erhält folgende Information: Die Pfade, die zwischen den Reichen der Götter schweben - von Asgard, der Heimat der Götter, über Jotunheim, das Land der Riesen, bis hinab nach Svartalfheim, dem Reich der Schatten - tragen das Echo uralter Geheimnisse."
-            "Die Route führt von Asgard über Jotunheim nach Svartalfheim, die zweite Zahl des Codes."
-            "Beispielhinweise: 9-Welten Baum, Schiffskarte finden, Schiffsroute"
+            "Der Spieler arbeitet an Rätsel 2"
+            "Der Spieler erhält folgende Information: Wer die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, kann uralte Geheimnisse offenbaren."
+            "Hinweis 1: Verweise auf die bereits vorhandene Information und erwähne, dass es sich hier um Teile von den 9 Welten handelt, die oft Als Baum assoziiert werden."
+            "Hinweis 2: Erwähne, dass die richtige Reihenfolge der genannten Welten wichtig ist."
+            "Hinweis 3: Erwähne, dass die Beschriftung der einzelnen Welten wichtig ist."
+            "Hinweis 4: Es muss quasi eine Reiseroute gezeichnet werden, indem die Beschriftungen der erforderlichen Welten miteinander verbunden werden."
+            "Hinweis 5: Die gezeichnete Reiseroute genauer betrachten. Eventuell verbirgt sich darin ja eine Zahl?"
             "Lösung: 2 oder zwei"
         )
     elif current_riddle == 3:
         system_message += (
-            "Der Spieler arbeitet an Rätsel 3: Die Zeichen der Götter. "
-            "Der Spierler erhält folgende Information: In den Schätzen ruht die Macht des Donners - ein Zeichen, das nur diejenigen erkennen, die das Auge des Weisen besitzen."
-            "Ziel: Die Spieler müssen die Goldmünzen finden, wo die Zeichen der Götter abgebildet sind. Im Raum findet finden sich die Zeichen der Götter wieder. Hier ist für jeden Gott eine Information hinterlegt. Die Spieler müssen das richtige Symbol für den Donnergott herausfinden, um die Zahl erhalten zu können."
-            "Beipielhinweise: auf vorliegende Information hinweisen, Goldschätze, Donnergott, Zeichen der Götter im Raum"
-            "Lösung: 6 oder sechs"
+            "Der Spieler arbeitet an Rätsel 3."
+            "Der Spierler erhält folgende Information: In den Goldschätzen schlummert die Macht der Götter – wer Odins Pfad folgt, wird das Ziel erreichen."
+            "Hinweis 1: Verweise auf die vorhande Information und darauf, dass nach Goldschätzen ausschau gehalten werden soll."
+            "Hinweis 2: In den Golschätzen ist Odin, Thor und Loki abgebildet. Hier muss nach verborgenen Details ausschau gehalten werden."
+            "Hinweis 3: Jeder Gott steht mit etwas bestimmten in Verbindung. Dies ist in den Goldmünzen zu erkennen. "
+            "Hinweis 4: Die Zeichen der Götter finden sich im Raum wieder. "
+            "Hinweis 5: In der gefunden Information über Odin sind versteckte Hinweise, die die letzte Zahl Bilden"
+            "Hinweis 6: Ausschau halten nach bestimmten Wörtern, die mit einer Zahl in Verbindung stehen."
+            "Erwähne nicht: Dass Odin der Allvater und Gott der Weisheit ist."
+            "Erwähne nicht: Dass Odin mit zwei Raben in Beziehung steht."
+            "Erwähne nicht: Dass Thor mit einem Hammer in Beziehung steht."
+            "Erwähne nicht: Dass Thor der Donnergott und der Beschützer Midgards ist."
+            "Erwähne nicht: Dass Loki mit zwei Hörnern in Beziehung steht."
+            "Erwähne nicht: Dass Loki der Gott des Schabernacks und der Täuschung ist."
+        
+            "Lösung: 21 oder einundzwanzig"
         )
 
     messages = [

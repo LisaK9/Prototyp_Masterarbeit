@@ -35,9 +35,9 @@ html, body {
 .intro-text {
     position: relative;
     z-index: 2;
-    max-width: 100%;
+    max-width: 60%;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.3); /* Halbtransparenter Hintergrund für bessere Lesbarkeit */
+    background: rgba(0, 0, 0, 0.4); /* Halbtransparenter Hintergrund für bessere Lesbarkeit */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     color: white;

@@ -1,4 +1,4 @@
-const correctCode = [9, 2, 6]; // Der richtige Code: 6-2-4
+const correctCode = [9, 2, 21]; // Der richtige Code: 6-2-4
 
 let currentRiddle = 1;  // Speichert das zuletzt aktive Rätsel
 
@@ -82,16 +82,18 @@ function checkDigit() {
     .catch(error => console.error('Error bei /update_code:', error));
 }
 
+// Event-Listener für die Eingabefelder, um die Entertaste zu unterstützen
+document.querySelectorAll('#code-input input').forEach(input => {
+    input.addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Verhindere das Standardverhalten der Entertaste
+            checkDigit(); // Überprüfe die eingegebene Zahl
+        }
+    });
+});
 // **Event-Listener für den Checken-Button**
 document.getElementById('check-button').addEventListener('click', checkDigit);
 
-// **Event-Listener für die Enter-Taste**
-document.getElementById(`code-digit-${currentRiddle}`).addEventListener('keydown', function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        checkDigit();
-    }
-});
 
 document.getElementById('chat-input').addEventListener('keydown', function(event) {
     if (event.key === "Enter") {
@@ -177,11 +179,18 @@ document.querySelector('#custom-scroll-popup .custom-close').addEventListener('c
 
 // Schließe das Popup, wenn außerhalb geklickt wird
 window.addEventListener('click', function(event) {
+    // Schließe alle Popups, wenn außerhalb geklickt wird
+    document.querySelectorAll('.popup').forEach(popup => {
+        if (event.target === popup) {
+            popup.style.display = 'none'; // Popup ausblenden
+        }
+    });
     const popup = document.getElementById('custom-scroll-popup');
     if (event.target === popup) {
         popup.style.display = 'none'; // Popup ausblenden
     }
 });
+
 
 document.querySelectorAll('.close').forEach(closeButton => {
     closeButton.addEventListener('click', function() {
