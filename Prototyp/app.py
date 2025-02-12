@@ -72,6 +72,7 @@ def chat():
     if current_riddle == 1:
         system_message += (
             " Der Spieler arbeitet an Rätsel 1."
+            "Szenario: Der Spieler muss im Raum anhand der Hinweise zwei Dinge finden: Ein Runen-Alphabet, das sich in einer Steintafel verbirgt und eine Abfolge von Runen, die sich im Holz verbirgt. (Gehe hier auf Hinweise 1-3 ein) Bei der Runenabfolge ist ein geheimes Muster in Form von Punkten integriert. (Gehe hier auf Hinweis 4 ein) Das Muster unterscheidet sich in Größe und Anzahl von dargestellten Punkten. (Gehe hier auf Hinweis 5 ein) Er muss dann erkennen, dass er nur bestimmte Runen davon mit dem Runen-Alphabet übersetzen muss und erhält dadurch die Zahl für den Code."
             "Der Spieler erhält folgende Information: In den Tiefen der Zeit, wo die Geschichten der Wikinger in Stein und Holz verewigt sind, ruhen verborgene Wahrheiten."
             "Lösung: 9 oder neun"
             "Hinweis 1: Verweise auf die bereits vorhandene Information und erinnere daran, dass nach versteckten Zeichen in Holz und Stein geachtet werden soll."
@@ -84,30 +85,36 @@ def chat():
     elif current_riddle == 2:
         system_message += (
             "Der Spieler arbeitet an Rätsel 2"
+            "Szenario: Der Spieler muss im Raum anhand der Hinweise eine Karte der 9-Welten finden (gehe hier auf Hinweis 1-2 ein). Der Spieler soll sich dann auf eine Reise begeben. Dabei soll er die genannten Welten in genau dieser Reihenfolge besuchen. Er muss erkennen, dass diese Welten anhand einer Linie verbunden werden müssen, woraus sich eine Reiseroute ergibt. (Gehe hier auf Hinweise 3-8 ein) Wenn man den Linien dieser Route in der angegebenen Reihenfolge folgt, sieht sie aus wie eine Zahl. Diese ist die Lösung für den Code. (Gehe hier auf Hinweis 9 ein)"
             "Der Spieler erhält folgende Information: Wer die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, kann uralte Geheimnisse offenbaren."
-            "Hinweis 1: Verweise auf die bereits vorhandene Information und erwähne, dass es sich hier um Teile von den 9 Welten handelt, die oft Als Baum assoziiert werden."
-            "Hinweis 2: Erwähne, dass die richtige Reihenfolge der genannten Welten wichtig ist."
-            "Hinweis 3: Erwähne, dass die Beschriftung der einzelnen Welten wichtig ist."
-            "Hinweis 4: Es muss quasi eine Reiseroute gezeichnet werden, indem die Beschriftungen der erforderlichen Welten miteinander verbunden werden."
-            "Hinweis 5: Die gezeichnete Reiseroute genauer betrachten. Eventuell verbirgt sich darin ja eine Zahl?"
+            "Hinweis 1: Bei den genannten Welten handelt es sich um die 9 Welten. Diese werden oft als Baum dargestellt, der 9-Welten-Baum."
+            "Hinweis 2: Im Raum muss eine Karte gefunden werden, welche die 9 Welten zeigt. Vielleicht gibt es ein Detail, das mit dem 9-Welten-Baum in Verbindung gebracht werden könnte."
+            "Hinweis 3: Verweise auf die vorhandene Information, in der steht, welche Welten man bereisen muss und zähle diese in der richtigen Reihenfolge auf."
+            "Hinweis 4: Die Einhaltung der Reihenfolge der genannten Welten während der Reise ist wichtig."
+            "Hinweis 5: Das Wasser, das auf der Karte abgebildet ist, ist für die Lösung des Rätsels oder die Bildung der Route nicht relevant."
+            "Hinweis 6: Die Welten des Weltenbaums werden oft durch Linien miteinander verbunden."    
+            "Hinweis 7: Die genannten Welten müssen direkt durch Linien miteinander verbunden werden. Dabei ist immer die Beschriftung der einzelnen Welten der Ausgangspunkt."
+            "Hinweis 8: Die Verbindung der genannten Welten ergibt eine Reiseroute. Diese ist von besonderer Bedeutung"
+            "Hinweis 9: Die gezeichnete Reiseroute muss sehr genau betrachtet werden. Eventuell verbirgt sich darin ja eine Zahl?"
             "Lösung: 2 oder zwei"
         )
     elif current_riddle == 3:
         system_message += (
             "Der Spieler arbeitet an Rätsel 3."
+            "Szenario: Der Spieler muss anhand des Hinweises der Schriftrolle erkennen, dass er einen versteckten Hinweis in den Goldschätzen findet. (Gehe hier auf Hinweis 1 ein) In dem versteckten Hinweis in den Goldschätzen sind Goldmünzen mir den Gravuren von Odin, Loki und Thor abgebildet. Der Spieler muss erkennen, dass es sich nicht um die Anzahl der Münzen handelt, die mit Odin abgebildet sind, sondern dass sich in den Abbildungen der Götter die Zeichen verstecken, die mit ihnen in Verbindung gebracht werden. (Gehe hier auf Hinweis 2-3 ein) Wenn diese Zeichen gefunden werden, sind diese bei genauerer Betrachtung im Raum wieder zu finden. Hier versteckt sich der finale Hinweis. Es öffnet sich ein Text, der Informationen über die Götter enthält. Da Odin der Weg weist, muss der Spieler erkennen, dass der Text über Odin relevant ist. (Gehe hier auf Hinweis 4 ein) Der Spieler muss anschließend erkennen, dass in diesem Text mehrere Zahlen-Wörter geschrieben sind. Diese müssen addiert werden und bildne die letzte Zahl des Codes. (Gehe hier auf Hinweise 5-6 ein)"
             "Der Spierler erhält folgende Information: In den Goldschätzen schlummert die Macht der Götter – wer Odins Pfad folgt, wird das Ziel erreichen."
             "Hinweis 1: Verweise auf die vorhande Information und darauf, dass nach Goldschätzen ausschau gehalten werden soll."
             "Hinweis 2: In den Golschätzen ist Odin, Thor und Loki abgebildet. Hier muss nach verborgenen Details ausschau gehalten werden."
             "Hinweis 3: Jeder Gott steht mit etwas bestimmten in Verbindung. Dies ist in den Goldmünzen zu erkennen. "
-            "Hinweis 4: Die Zeichen der Götter finden sich im Raum wieder. "
-            "Hinweis 5: In der gefunden Information über Odin sind versteckte Hinweise, die die letzte Zahl Bilden"
+            "Hinweis 4: Die Zeichen der Götter finden sich im Raum wieder. Diese enthalten Informationen über die jeweiligen Götter."
+            "Hinweis 5: In der gefunden Information über Odin sind versteckte Hinweise, die die letzte Zahl bilden"
             "Hinweis 6: Ausschau halten nach bestimmten Wörtern, die mit einer Zahl in Verbindung stehen."
             "Erwähne nicht: Dass Odin der Allvater und Gott der Weisheit ist."
-            "Erwähne nicht: Dass Odin mit zwei Raben in Beziehung steht."
-            "Erwähne nicht: Dass Thor mit einem Hammer in Beziehung steht."
+            "Erwähne nicht: Dass Odin mit zwei Raben in Beziehung steht, außer der Spieler hat dies von sich aus herausgefunden."
+            "Erwähne nicht: Dass Thor mit einem Hammer in Beziehung steht, außer der Spieler hat dies von sich aus herausgefunden."
             "Erwähne nicht: Dass Thor der Donnergott und der Beschützer Midgards ist."
             "Erwähne nicht: Dass Loki mit zwei Hörnern in Beziehung steht."
-            "Erwähne nicht: Dass Loki der Gott des Schabernacks und der Täuschung ist."
+            "Erwähne nicht: Dass Loki der Gott des Schabernacks und der Täuschung ist, außer der Spieler hat dies von sich aus herausgefunden."
         
             "Lösung: 21 oder einundzwanzig"
         )
