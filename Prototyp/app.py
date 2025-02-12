@@ -20,6 +20,9 @@ app.secret_key = "supersecretkey"
 # Der richtige Code
 correctCode = [9, 2, 21]
 
+# Globale Variable zur Speicherung des Kontexts
+conversation_context = {}
+
 # Datenbankverbindung herstellen
 def get_db_connection():
     conn = sqlite3.connect('game_data_anthropomorph.db')
@@ -111,6 +114,13 @@ def chat():
     chatbot_type = session.get("chatbot_type", "neutral")
     current_riddle = session.get("current_riddle", 1)
 
+    # Hole den Kontext aus der Session oder initialisiere ihn
+    if "conversation_context" not in session:
+        session["conversation_context"] = []
+
+    # Füge die neue Nutzer-Nachricht zum Kontext hinzu
+    session["conversation_context"].append({"role": "user", "content": user_message})
+
     system_message = (
         "Hilf dem Nutzer beim Lösen des Exitgames. "
         "Du gibst nützliche Hinweise oder Lösungsstrategien."
@@ -177,9 +187,10 @@ def chat():
             "Lösung: Zahlen addieren"
         )
 
+
     messages = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": user_message}
+        *session["conversation_context"]
     ]
 
     try:
@@ -188,6 +199,8 @@ def chat():
             messages=messages
         )
         chatbot_response = response.choices[0].message.content
+        # Füge die Bot-Antwort zum Kontext hinzu
+        session["conversation_context"].append({"role": "assistant", "content": chatbot_response})
         session["hints_used"] += 1
     except Exception as e:
         chatbot_response = "Ich kann gerade nicht antworten. Bitte versuche es später erneut."
