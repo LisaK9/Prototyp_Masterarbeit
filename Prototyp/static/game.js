@@ -37,6 +37,116 @@ document.addEventListener('DOMContentLoaded', function() {
     updateHintAreas(currentRiddle);
 });
 
+let sessionId;  // Globale Variable für die Session-ID
+
+// Initialisiere ein Objekt, um die Anzahl der Versuche für jedes Rätsel zu speichern
+const attemptsTracker = {
+    1: 0, // Versuche für Rätsel 1
+    2: 0, // Versuche für Rätsel 2
+    3: 0  // Versuche für Rätsel 3
+};
+
+const startTimes = {
+    1: null, // Startzeit für Rätsel 1
+    2: null, // Startzeit für Rätsel 2
+    3: null  // Startzeit für Rätsel 3
+};
+
+const botRequestCounts = {
+    1: 0, // Bot-Anfragen für Rätsel 1
+    2: 0, // Bot-Anfragen für Rätsel 2
+    3: 0  // Bot-Anfragen für Rätsel 3
+};
+
+// Funktion zum Starten einer neuen Session
+function startSession() {
+    fetch('/start_session', {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        sessionId = data.session_id;  // Speichere die Session-ID
+        console.log('Session gestartet:', sessionId);
+    })
+    .catch(error => console.error('Fehler beim Starten der Session:', error));
+}
+
+// Funktion zum Speichern der Interaktion
+function saveInteractionToDatabase(riddleNumber, userMessage, botResponse) {
+    fetch('/save_interaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            session_id: sessionId,
+            riddle_number: riddleNumber,
+            user_message: userMessage,
+            bot_response: botResponse
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Interaktion gespeichert:', data);
+    })
+    .catch(error => console.error('Fehler beim Speichern der Interaktion:', error));
+}
+
+// Funktion zum Speichern der Versuche in der Datenbank
+function saveAttemptsToDatabase() {
+    fetch('/save_attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            session_id: sessionId,
+            attempts_riddle_1: attemptsTracker[1],
+            attempts_riddle_2: attemptsTracker[2],
+            attempts_riddle_3: attemptsTracker[3]
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Versuche gespeichert:', data);
+    })
+    .catch(error => console.error('Fehler beim Speichern der Versuche:', error));
+}
+
+// Funktion zum Speichern der Zeit für ein Rätsel
+function saveTimeToDatabase(riddleNumber, timeTaken, startTime, endTime) {
+    fetch('/save_time', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            session_id: sessionId,
+            riddle_number: riddleNumber,
+            time_taken: timeTaken,
+            start_time: startTime.toISOString(),  // Startzeit als ISO-String
+            end_time: endTime.toISOString()     // Endzeit als ISO-String
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Zeit gespeichert:', data);
+    })
+    .catch(error => console.error('Fehler beim Speichern der Zeit:', error));
+}
+
+// Funktion zum Speichern der Bot-Anfragen
+function saveBotRequestsToDatabase(riddleNumber, requestCount) {
+    fetch('/save_bot_request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            session_id: sessionId,
+            riddle_number: riddleNumber,
+            request_count: requestCount
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Bot-Anfragen gespeichert:', data);
+    })
+    .catch(error => console.error('Fehler beim Speichern der Bot-Anfragen:', error));
+}
+
 function checkDigit() {
     const input = document.getElementById(`code-digit-${currentRiddle}`);
     const feedback = document.getElementById('code-feedback');
@@ -50,6 +160,13 @@ function checkDigit() {
         return;
     }
 
+    // Startzeit für das Rätsel setzen, falls noch nicht geschehen
+    if (!startTimes[currentRiddle]) {
+        startTimes[currentRiddle] = new Date();  // Aktuelle Zeit als Date-Objekt
+    }
+    // Erhöhe den Versuchszähler für das aktuelle Rätsel
+    attemptsTracker[currentRiddle]++;
+
     // Sende die eingegebene Zahl zur Überprüfung
     fetch('/update_code', {
         method: 'POST',
@@ -61,6 +178,16 @@ function checkDigit() {
         if (data.status === "correct") {
             feedback.textContent = "Richtig!";
             feedback.style.color = 'green';
+
+            // Berechne die benötigte Zeit für das Rätsel
+            const endTime = new Date();  // Aktuelle Zeit als Date-Objekt
+            const timeTaken = Math.floor((endTime - startTimes[currentRiddle]) / 1000); // Zeit in Sekunden
+
+            // Speichere die Zeit in der Datenbank
+            saveTimeToDatabase(currentRiddle, timeTaken, startTimes[currentRiddle], endTime);
+
+            // Speichere die Bot-Anfragen in der Datenbank
+            saveBotRequestsToDatabase(currentRiddle, botRequestCounts[currentRiddle]);
 
             // Sende eine Nachricht an den Chatbot, um Feedback zu geben
             sendChatbotFeedback(currentRiddle);
@@ -74,6 +201,8 @@ function checkDigit() {
                 updateHintAreas(currentRiddle);
             } else {
                 feedback.textContent = "Code erfolgreich eingegeben!";
+                // Speichere die Versuche in der Datenbank
+                saveAttemptsToDatabase();
             }
         } else {
             feedback.textContent = "Falsch! Versuche es erneut.";
@@ -86,6 +215,12 @@ function checkDigit() {
     })
     .catch(error => console.error('Error bei /update_code:', error));
 }
+
+// Starte eine neue Session, wenn das Spiel geladen wird
+document.addEventListener('DOMContentLoaded', function() {
+    startSession();
+    updateHintAreas(currentRiddle);
+});
 
 // Event-Listener für die Eingabefelder, um die Entertaste zu unterstützen
 document.querySelectorAll('#code-input input').forEach(input => {
@@ -221,6 +356,9 @@ function sendMessage() {
 
     if (!userMessage) return;  // Keine Nachricht senden, wenn das Eingabefeld leer ist
 
+    // Erhöhe den Zähler für Bot-Anfragen
+    botRequestCounts[currentRiddle]++;
+
     // Benutzernachricht im Chatfenster anzeigen
     const userMessageElement = document.createElement('div');
     userMessageElement.classList.add('message', 'user');
@@ -248,6 +386,9 @@ function sendMessage() {
         botMessageElement.classList.add('message', 'bot');
         botMessageElement.innerHTML = `<p>${data.response}</p>`;
         chatWindow.appendChild(botMessageElement);
+
+        // Speichere die Interaktion in der Datenbank
+        saveInteractionToDatabase(currentRiddle, userMessage, data.response);
 
         chatWindow.scrollTop = chatWindow.scrollHeight;
     })
