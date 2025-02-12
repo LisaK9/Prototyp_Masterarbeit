@@ -3,6 +3,8 @@ import openai
 import random
 import sqlite3
 import time
+import uuid
+from datetime import datetime
 
 # API-Schlüssel aus Datei laden
 with open('api.key', 'r') as api_key_file:
@@ -17,6 +19,58 @@ app.secret_key = "supersecretkey"
 # Der richtige Code
 correctCode = [9, 2, 21]
 
+# Datenbankverbindung herstellen
+def get_db_connection():
+    conn = sqlite3.connect('game_data_neutral.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# Datenbanktabellen erstellen (wird nur einmal ausgeführt)
+def create_tables():
+    conn = get_db_connection()
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS user_attempts (
+            session_id TEXT PRIMARY KEY,
+            attempts_riddle_1 INTEGER,
+            attempts_riddle_2 INTEGER,
+            attempts_riddle_3 INTEGER,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS riddle_times (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT,
+            riddle_number INTEGER,
+            time_taken INTEGER,
+            start_time DATETIME,
+            end_time DATETIME,
+            FOREIGN KEY (session_id) REFERENCES user_attempts(session_id)
+        )
+    ''')
+    conn.execute('''
+           CREATE TABLE IF NOT EXISTS bot_requests (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               session_id TEXT,
+               riddle_number INTEGER,
+               request_count INTEGER,
+               FOREIGN KEY (session_id) REFERENCES user_attempts(session_id)
+           )
+       ''')
+    conn.execute('''
+            CREATE TABLE IF NOT EXISTS bot_interactions (
+                interaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                session_id TEXT,
+                riddle_number INTEGER,
+                user_message TEXT,
+                bot_response TEXT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (session_id) REFERENCES user_attempts(session_id)
+            )
+        ''')
+    conn.commit()
+    conn.close()
+
 @app.route("/")
 def index():
     session_id = str(random.randint(100000, 999999))  # Einfache Session-ID
@@ -28,6 +82,18 @@ def index():
     session["start_time"] = time.time()
     return render_template("start.html")
 
+# Endpoint: Session starten
+@app.route('/start_session', methods=['POST'])
+def start_session():
+    session_id = str(uuid.uuid4())  # Eindeutige Session-ID generieren
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO user_attempts (session_id) VALUES (?)',
+        (session_id,)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({'session_id': session_id})
 
 @app.route("/game")
 def game():
@@ -142,5 +208,78 @@ def update_code():
     else:  # Wenn die Zahl falsch ist
         return jsonify({"status": "incorrect", "current_riddle": session["current_riddle"]})
 
+
+# Endpoint: Versuche speichern
+@app.route('/save_attempts', methods=['POST'])
+def save_attempts():
+    data = request.json
+    session_id = data.get('session_id')
+    attempts_riddle_1 = data.get('attempts_riddle_1')
+    attempts_riddle_2 = data.get('attempts_riddle_2')
+    attempts_riddle_3 = data.get('attempts_riddle_3')
+
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE user_attempts SET attempts_riddle_1 = ?, attempts_riddle_2 = ?, attempts_riddle_3 = ? WHERE session_id = ?',
+        (attempts_riddle_1, attempts_riddle_2, attempts_riddle_3, session_id)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'success'})
+
+@app.route('/save_time', methods=['POST'])
+def save_time():
+    data = request.json
+    session_id = data.get('session_id')
+    riddle_number = data.get('riddle_number')
+    time_taken = data.get('time_taken')
+    start_time = data.get('start_time')
+    end_time = data.get('end_time')
+
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO riddle_times (session_id, riddle_number, time_taken, start_time, end_time) VALUES (?, ?, ?, ?, ?)',
+        (session_id, riddle_number, time_taken, start_time, end_time)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'success'})
+
+# Endpoint: Bot-Anfrage speichern
+@app.route('/save_bot_request', methods=['POST'])
+def save_bot_request():
+    data = request.json
+    session_id = data.get('session_id')
+    riddle_number = data.get('riddle_number')
+    request_count = data.get('request_count')
+
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO bot_requests (session_id, riddle_number, request_count) VALUES (?, ?, ?)',
+        (session_id, riddle_number, request_count)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'success'})
+
+# Endpoint: Interaktion speichern
+@app.route('/save_interaction', methods=['POST'])
+def save_interaction():
+    data = request.json
+    session_id = data.get('session_id')
+    riddle_number = data.get('riddle_number')
+    user_message = data.get('user_message')
+    bot_response = data.get('bot_response')
+
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO bot_interactions (session_id, riddle_number, user_message, bot_response) VALUES (?, ?, ?, ?)',
+        (session_id, riddle_number, user_message, bot_response)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'success'})
+
 if __name__ == "__main__":
+    create_tables()  # Stelle sicher, dass die Tabelle existiert
     app.run(debug=True)
