@@ -5,93 +5,132 @@ import sqlite3
 import time
 import uuid
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
+import psycopg2
 
-# API-Schlüssel aus Datei laden
-with open('api.key', 'r') as api_key_file:
-    API_KEY = api_key_file.read().strip()
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 # OpenAI-Client initialisieren
 openai_client = openai.OpenAI(api_key=API_KEY)
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.getenv("SECRET_KEY")
+
+DATABASE_URL = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
+
+# **SQLAlchemy für Supabase konfigurieren**
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL  #  Verbindung zu Supabase
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# Flask-SQLAlchemy-Instanz erstellen
+db = SQLAlchemy(app)
+
+# Flask-Session mit SQLAlchemy für Supabase konfigurieren
+app.config["SESSION_TYPE"] = "sqlalchemy"
+app.config["SESSION_SQLALCHEMY"] = db  # ✅ Supabase wird für Sessions genutzt
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_USE_SIGNER"] = True
+Session(app)
+
 
 # Der richtige Code
 correctCode = [9, 2, 21]
 
 # Datenbankverbindung herstellen
 def get_db_connection():
-    conn = sqlite3.connect('game_data_neutral.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+    return psycopg2.connect(DATABASE_URL, sslmode="require")
 
 # Datenbanktabellen erstellen (wird nur einmal ausgeführt)
 def create_tables():
-    conn = get_db_connection()
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS user_attempts (
-            session_id TEXT PRIMARY KEY,
-            attempts_riddle_1 INTEGER,
-            attempts_riddle_2 INTEGER,
-            attempts_riddle_3 INTEGER,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS riddle_times (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            session_id TEXT,
-            riddle_number INTEGER,
-            time_taken INTEGER,
-            start_time DATETIME,
-            end_time DATETIME,
-            FOREIGN KEY (session_id) REFERENCES user_attempts(session_id)
-        )
-    ''')
-    conn.execute('''
-           CREATE TABLE IF NOT EXISTS bot_requests (
-               id INTEGER PRIMARY KEY AUTOINCREMENT,
-               session_id TEXT,
-               riddle_number INTEGER,
-               request_count INTEGER,
-               FOREIGN KEY (session_id) REFERENCES user_attempts(session_id)
-           )
-       ''')
-    conn.execute('''
-            CREATE TABLE IF NOT EXISTS bot_interactions (
-                interaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    with app.app_context():
+        db.create_all()  # Erstellt alle Tabellen in SQLAlchemy
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS user_attempts_n (
+                session_id TEXT PRIMARY KEY,
+                attempts_riddle_1 INTEGER,
+                attempts_riddle_2 INTEGER,
+                attempts_riddle_3 INTEGER,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS riddle_times_n (
+                id SERIAL PRIMARY KEY,
+                session_id TEXT,
+                riddle_number INTEGER,
+                time_taken INTEGER,
+                start_time TIMESTAMP,
+                end_time TIMESTAMP
+            )
+        ''')
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS bot_requests_n (
+                id SERIAL PRIMARY KEY,
+                session_id TEXT,
+                riddle_number INTEGER,
+                request_count INTEGER
+            )
+        ''')
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS bot_interactions_n (
+                interaction_id SERIAL PRIMARY KEY,
                 session_id TEXT,
                 riddle_number INTEGER,
                 user_message TEXT,
                 bot_response TEXT,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (session_id) REFERENCES user_attempts(session_id)
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-    conn.commit()
-    conn.close()
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS session_data_n (
+                session_id TEXT PRIMARY KEY,
+                chatbot_type TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        conn.commit()
+        cur.close()
+        conn.close()
 
 @app.route("/")
 def index():
-    session_id = str(random.randint(100000, 999999))  # Einfache Session-ID
-    session["session_id"] = session_id
+    session.permanent = True  # Hält die Session aktiv
+    session["chatbot_type"] = "neutral"
     session["code"] = ["_", "_", "_"]
     session["current_riddle"] = 1
     session["hints_used"] = 0
     session["attempts"] = 0
     session["start_time"] = time.time()
+    chatbot_type = session["chatbot_type"]
+    session_id = session.sid
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('''
+                INSERT INTO session_data_n (session_id, chatbot_type) 
+                VALUES (%s, %s) ON CONFLICT (session_id) DO NOTHING
+            ''', (session_id, chatbot_type))
+    conn.commit()
+    cur.close()
+    conn.close()
+
     return render_template("start.html")
 
 # Endpoint: Session starten
 @app.route('/start_session', methods=['POST'])
 def start_session():
-    session_id = str(uuid.uuid4())  # Eindeutige Session-ID generieren
+    session_id = session.sid  # Verwende die automatisch generierte Flask-Session-ID
     conn = get_db_connection()
-    conn.execute(
-        'INSERT INTO user_attempts (session_id) VALUES (?)',
-        (session_id,)
-    )
+    cur = conn.cursor()
+    cur.execute('INSERT INTO user_attempts_n (session_id) VALUES (%s) ON CONFLICT DO NOTHING', (session_id,))
     conn.commit()
+    cur.close()
     conn.close()
     return jsonify({'session_id': session_id})
 
@@ -212,6 +251,7 @@ def update_code():
 # Endpoint: Versuche speichern
 @app.route('/save_attempts', methods=['POST'])
 def save_attempts():
+    """Speichert die Anzahl der Versuche für jedes Rätsel"""
     data = request.json
     session_id = data.get('session_id')
     attempts_riddle_1 = data.get('attempts_riddle_1')
@@ -219,16 +259,20 @@ def save_attempts():
     attempts_riddle_3 = data.get('attempts_riddle_3')
 
     conn = get_db_connection()
-    conn.execute(
-        'UPDATE user_attempts SET attempts_riddle_1 = ?, attempts_riddle_2 = ?, attempts_riddle_3 = ? WHERE session_id = ?',
-        (attempts_riddle_1, attempts_riddle_2, attempts_riddle_3, session_id)
-    )
+    cur = conn.cursor()
+    cur.execute('''
+                UPDATE user_attempts_n 
+                SET attempts_riddle_1 = %s, attempts_riddle_2 = %s, attempts_riddle_3 = %s 
+                WHERE session_id = %s
+            ''', (attempts_riddle_1, attempts_riddle_2, attempts_riddle_3, session_id))
     conn.commit()
+    cur.close()
     conn.close()
     return jsonify({'status': 'success'})
 
 @app.route('/save_time', methods=['POST'])
 def save_time():
+    """Speichert die Zeit, die für jedes Rätsel benötigt wurde"""
     data = request.json
     session_id = data.get('session_id')
     riddle_number = data.get('riddle_number')
@@ -237,34 +281,40 @@ def save_time():
     end_time = data.get('end_time')
 
     conn = get_db_connection()
-    conn.execute(
-        'INSERT INTO riddle_times (session_id, riddle_number, time_taken, start_time, end_time) VALUES (?, ?, ?, ?, ?)',
-        (session_id, riddle_number, time_taken, start_time, end_time)
-    )
+    cur = conn.cursor()
+    cur.execute('''
+                INSERT INTO riddle_times_n (session_id, riddle_number, time_taken, start_time, end_time) 
+                VALUES (%s, %s, %s, %s, %s)
+            ''', (session_id, riddle_number, time_taken, start_time, end_time))
     conn.commit()
+    cur.close()
     conn.close()
     return jsonify({'status': 'success'})
 
 # Endpoint: Bot-Anfrage speichern
 @app.route('/save_bot_request', methods=['POST'])
 def save_bot_request():
+    """Speichert, wie oft der Nutzer den Bot für ein Rätsel gefragt hat."""
     data = request.json
     session_id = data.get('session_id')
     riddle_number = data.get('riddle_number')
     request_count = data.get('request_count')
 
     conn = get_db_connection()
-    conn.execute(
-        'INSERT INTO bot_requests (session_id, riddle_number, request_count) VALUES (?, ?, ?)',
-        (session_id, riddle_number, request_count)
-    )
+    cur = conn.cursor()
+    cur.execute('''
+                INSERT INTO bot_requests_n (session_id, riddle_number, request_count) 
+                VALUES (%s, %s, %s)
+            ''', (session_id, riddle_number, request_count))
     conn.commit()
+    cur.close()
     conn.close()
     return jsonify({'status': 'success'})
 
 # Endpoint: Interaktion speichern
 @app.route('/save_interaction', methods=['POST'])
 def save_interaction():
+    """Speichert die Nutzer-Bot-Interaktionen in der Datenbank."""
     data = request.json
     session_id = data.get('session_id')
     riddle_number = data.get('riddle_number')
@@ -272,11 +322,13 @@ def save_interaction():
     bot_response = data.get('bot_response')
 
     conn = get_db_connection()
-    conn.execute(
-        'INSERT INTO bot_interactions (session_id, riddle_number, user_message, bot_response) VALUES (?, ?, ?, ?)',
-        (session_id, riddle_number, user_message, bot_response)
-    )
+    cur = conn.cursor()
+    cur.execute('''
+                INSERT INTO bot_interactions_n (session_id, riddle_number, user_message, bot_response) 
+                VALUES (%s, %s, %s, %s)
+            ''', (session_id, riddle_number, user_message, bot_response))
     conn.commit()
+    cur.close()
     conn.close()
     return jsonify({'status': 'success'})
 

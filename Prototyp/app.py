@@ -349,4 +349,4 @@ def save_interaction():
 
 if __name__ == "__main__":
     create_tables()  # Stelle sicher, dass die Tabelle existiert
-    app.run(debug=True)
+    app.run(debug=False)
