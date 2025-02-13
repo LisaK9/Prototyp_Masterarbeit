@@ -1,0 +1,404 @@
+body {
+    font-family: 'Caveat', cursive, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Container für das Bild */
+.image-container {
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 100%;
+    box-sizing: border-box;
+    position: relativ;
+}
+
+.image-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image-wrapper img {
+    width: 70%;
+    height: 90%;
+    object-fit: fill; /* Bild wird so skaliert, dass es den gesamten Bereich abdeckt */
+    position: fixed;
+    top: 0;
+    bottom: 15;
+    left: 25%;
+    right: 1%;
+    z-index: -1; /* Hintergrundbild */
+}
+
+/* Code-Eingabe */
+.code-container {
+    position: absolute;
+    bottom: 3%;
+    left: 60%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+}
+
+.code-container input {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+#check-button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#check-button:hover {
+    background-color: #0056b3;
+}
+
+/* Avatar- und Chat-Container */
+.avatar-container {
+    position: fixed;
+    bottom: 5%;
+    left: 0.5%;
+    width: 25%;
+    z-index: 1000;
+
+}
+
+.avatar-image {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.avatar-image:hover {
+    transform: scale(1.1);
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 5%;
+    left: 6%;
+    width: 18%;
+    height: 90%;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0) transparent;
+}
+
+.chatbox {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background: transparent;
+}
+
+.message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.message.user {
+    align-items: flex-end;
+}
+
+.message p {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.message.user p {
+    background-color: #007BFF;
+    color: white;
+}
+
+.message.bot p {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+/* Stile für die Ladeanimation */
+.loading-dots {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    /*padding: 10px;*/
+    font-size: 24px;
+    color: white;
+}
+
+.loading-dots span {
+    opacity: 0;
+    animation: blink 1.4s infinite;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Eingabefeld für den Chat */
+#chat-input {
+    padding: 10px;
+    width: calc(100% - 20px);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.9); /* Transparenter Hintergrund */
+}
+
+/* Stile für das Schriftrollen-Bild */
+.scroll-icon {
+    position: fixed;
+    bottom: 1%;
+    right: 5%;
+    width: 50px; /* Passe die Größe nach Bedarf an */
+    height: 50px; /* Passe die Größe nach Bedarf an */
+    cursor: pointer;
+    z-index: 1000; /* Stelle sicher, dass es über anderen Elementen liegt */
+}
+
+.scroll-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Stelle sicher, dass das Bild korrekt skaliert wird */
+}
+
+/* Unsichtbare Klickflächen für Hinweise */
+.hint-area {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0); /* Vollständig transparent */
+    cursor: default;
+    z-index: 1000; /* Über dem Bild */
+}
+
+/* Stile für Popups und andere Elemente bleiben unverändert */
+.popup {
+    display: none;
+    position: fixed;
+    /*top: 0;
+    left: 30%;*/
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: transparent;
+    padding: 1%;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    justify-content: center; /* Zentriert den Inhalt horizontal */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+    display: flex;
+    top: 45%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 90%;
+
+}
+
+.popup-content img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    object-fit: contain;
+    display: block;
+
+}
+
+/* Stile für das Schriftrollen-Popup */
+.scroll-popup {
+    position: relative;
+    background: transparent; /* Transparenter Hintergrund für das Popup */
+    padding: 0;
+    box-shadow: none;
+    top: 40%;
+    left: 35%;
+    transform: translate(-50%, -50%); /* Zentrierung */
+}
+
+.scroll-container {
+    position: relative;
+    display: inline-block; /* Container passt sich der Textgröße an */
+    max-width: 100%; /* Maximale Breite begrenzen */
+}
+.scroll-image {
+    width: auto; /* Bild passt sich der Breite des Popups an */
+    height: auto; /* Höhe passt sich automatisch an */
+    /*position: absolute; /* Bild als Hintergrund positionieren */
+    /*z-index: -1; /* Bild hinter dem Text platzieren */
+    display: block;
+}
+
+.scroll-text {
+    /*position: relative; /* Text über dem Bild positionieren */
+    position: absolute;
+    /*z-index:1;
+    font-family: 'Caveat', cursive; /* Schriftart für den Text */
+    font-size: 12px; /* Standard-Schriftgröße */
+    color: #000; /* Textfarbe */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Text exakt zentrieren */
+    white-space: pre-wrap; /* Zeilenumbrüche beibehalten */
+    word-wrap: break-word; /* Lange Wörter umbrechen */
+    /*padding: 40px 60px; /* Innenabstand für den Text */
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom:2%;
+    /*text-align: center;*/
+    max-width: 80%;
+}
+
+/* Stile für das neue Popup */
+.custom-popup {
+    display: none; /* Popup ist standardmäßig ausgeblendet */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dunkler Hintergrund */
+    z-index: 1001; /* Über anderen Elementen */
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-popup-content {
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%); /* Zentrierung */
+    text-align: center;
+}
+
+.custom-scroll-container {
+    position: relative;
+    display: inline-block; /* Container passt sich der Textgröße an */
+    max-width: 100%; /* Maximale Breite begrenzen */
+}
+
+.custom-scroll-image {
+    width: auto; /* Bild passt sich der Breite des Textes an */
+    height: auto; /* Höhe passt sich automatisch an */
+    display: block;
+}
+
+.custom-scroll-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Text exakt zentrieren */
+    white-space: pre-wrap; /* Zeilenumbrüche beibehalten */
+    word-wrap: break-word; /* Lange Wörter umbrechen */
+    /*padding: 20px; /* Innenabstand für den Text */
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 12%;
+    padding-bottom:5%;
+    text-align: center;
+    font-family: 'Caveat', cursive; /* Schriftart für den Text */
+    font-size: 18px; /* Standard-Schriftgröße */
+    color: #000; /* Textfarbe */
+}
+
+.custom-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+}
+
+.custom-close:hover {
+    color: #000;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 36px;
+    cursor: pointer;
+    color: white;
+    width: 20%;
+    height:20%;
+    font-weight: bold;
+    border-radius: 20%;
+}
+
+.close:hover {
+    color: #000;
+}
+/* Mobile Anpassungen */
+@media (max-width: 768px) {
+    .image-wrapper img {
+        width: 100%;
+        height: auto;
+    }
+
+    .chat-container {
+        width: 80%;
+        left: 5%;
+        bottom: 5%;
+    }
+}

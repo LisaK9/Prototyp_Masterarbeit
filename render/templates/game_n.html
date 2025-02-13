@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de"> <!-- Sprache auf Deutsch geändert -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viking Exit Game</title>
+    <!-- Einbindung von "Caveat" -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <!--<link rel="stylesheet" href="static/game.css">  CSS verlinken -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='game_n.css') }}">
+</head>
+<body>
+    <!-- Bildcontainer -->
+    <div class="image-container">
+        <div class="image-wrapper">
+            <!--<img src="static/images/Exitgame_Neu.png" alt="Viking Hall">-->
+            <img src="{{ url_for('static', filename='images/Exitgame_Neu.png') }}" alt="Viking Hall">
+            <!-- Unsichtbare Klickflächen für Hinweise -->
+            <div class="hint-area" id="hint1-area" style="bottom: 11%; left: 45%; width: 27%; height: 13%;"></div>
+            <div class="hint-area" id="hint2-area" style="bottom: 25%; left: 50%; width: 17%; height: 5%;"></div>
+            <div class="hint-area" id="hint3-area" style="bottom: 48%; left: 50%; width: 18%; height: 28%;"></div>
+            <div class="hint-area" id="hint4-area" style="bottom: 60%; left: 25%; width: 10%; height: 23%;"></div>
+            <div class="hint-area" id="hint5-area" style="bottom: 61%; right: 5%; width: 10%; height: 23%;"></div>
+            <div class="hint-area" id="hint6-area" style="bottom: 12%; left: 28%; width: 16%; height: 15%;"></div>
+            <div class="hint-area" id="hint7-area" style="bottom: 12%; right: 15%; width: 13%; height: 20%;"></div>
+            <div class="hint-area" id="hint8-area" style="bottom: 77%; right: 20%; width: 18%; height: 13%;"></div>
+            <div class="hint-area" id="hint9-area" style="bottom: 77%; left: 40%; width: 18%; height: 13%;"></div>
+
+        </div>
+    </div>
+
+    <!-- Code-Eingabe -->
+    <div class="code-container">
+        <div id="code-input">
+            <!-- Eingabefelder für den Code -->
+            <input type="text" id="code-digit-1" maxlength="2">
+            <input type="text" id="code-digit-2" maxlength="2" disabled>
+            <input type="text" id="code-digit-3" maxlength="2" disabled>
+            <!-- Checken-Button -->
+            <button id="check-button">Checken</button>
+        </div>
+        <!-- Feedback-Nachricht -->
+        <div id="code-feedback"></div>
+    </div>
+
+    <!-- Avatar-Bild und Chat-Container -->
+    <div class="avatar-container">
+        <!--<img src="/static/images/avatar.png" alt="Avatar" class="avatar-image">-->
+        <div class="chat-container" id="chat-container">
+            <div class="chatbox" id="chat-window">
+                <!-- Hier werden die Chat-Nachrichten dynamisch eingefügt -->
+            </div>
+            <input type="text" id="chat-input" placeholder="Type your message...">
+        </div>
+    </div>
+    <!-- Overlay für Popups -->
+    <div id="popup-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 999;"></div>
+
+    <!-- Popups für Hinweise -->
+    <div id="hint1-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/steintafel_neu.png" alt="Hinweis 1">-->
+            <img src="{{ url_for('static', filename='images/steintafel_neu.png') }}" alt="Hinweis 1">
+        </div>
+    </div>
+
+    <div id="hint2-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/balkentest.png" alt="Hinweis 2">-->
+            <img src="{{ url_for('static', filename='images/balkentest.png') }}" alt="Hinweis 2">
+        </div>
+    </div>
+
+    <div id="hint3-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/9weltenneu_test.png" alt="Hinweis 3">-->
+            <img src="{{ url_for('static', filename='images/9weltenneu_test.png') }}" alt="Hinweis 3">
+        </div>
+    </div>
+
+    <!-- Popup für Rätsel 3 (Schriftrolle) -->
+    <div id="hint4-popup" class="popup">
+        <div class="popup-content scroll-popup">
+        <span class="close">&times;</span>
+        <div class="scroll-container">
+            <!--<img src="static/images/pergament_hinweis.png" alt="Schriftrolle" class="scroll-image">-->
+            <img src="{{ url_for('static', filename='images/pergament_hinweis.png') }}" alt="Schriftrolle" class="scroll-image">
+            <div class="scroll-text">
+                <p>Der Gott des Schabernacks und der Täuschung <br> Er ist eine der rätselhaftesten Figuren der nordischen Mythodlogie. Ein wandelbarer Gestaltwandler - weder ganz gut noch ganz böse. Er bewegt sich frei zwischen den neun Welten, wo er mit sienen Streichen Chaos stiftet - sei es in Asgard, wo er den Göttern Streiche spielt, oder in Jötunheim, wo er die Riesen narrt.<br> Sein Einfluss geht jedoch weit über harmlose Späße hinaus. Er ist der Vater von drei der furchteinflößendsten Kreaturen der Mythologie.<br> Seine List brachte den Göttern sowohl große Schätze als auch große Katastrophen. Nachdem er den blinden Gott Hödr dazu brachte, Balders zu töten, fesselten die Götter ihn in einer Höhle mit den Eingeweiden seines eigenen Sohnes. So blieb er neun Jahre lang gefesselt, bis Ragnarök, die letzte große Schlacht, begann. In dieser Schlacht trafen er und Heimdall - zwei ewige Kontrahenten - aufeinander und töteten sich am Ende gegenseitig.
+                    </p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <div id="hint5-popup" class="popup">
+        <div class="popup-content scroll-popup">
+        <span class="close">&times;</span>
+        <div class="scroll-container">
+            <!--<img src="static/images/pergament_hinweis.png" alt="Schriftrolle" class="scroll-image">-->
+            <img src="{{ url_for('static', filename='images/pergament_hinweis.png') }}" alt="Schriftrolle" class="scroll-image">
+            <div class="scroll-text">
+                <p>Der Gott des Schabernacks und der Täuschung <br> Er ist eine der rätselhaftesten Figuren der nordischen Mythodlogie. Ein wandelbarer Gestaltwandler - weder ganz gut noch ganz böse. Er bewegt sich frei zwischen den neun Welten, wo er mit sienen Streichen Chaos stiftet - sei es in Asgard, wo er den Göttern Streiche spielt, oder in Jötunheim, wo er die Riesen narrt.<br> Sein Einfluss geht jedoch weit über harmlose Späße hinaus. Er ist der Vater von drei der furchteinflößendsten Kreaturen der Mythologie.<br> Seine List brachte den Göttern sowohl große Schätze als auch große Katastrophen. Nachdem er den blinden Gott Hödr dazu brachte, Balders zu töten, fesselten die Götter ihn in einer Höhle mit den Eingeweiden seines eigenen Sohnes. So blieb er neun Jahre lang gefesselt, bis Ragnarök, die letzte große Schlacht, begann. In dieser Schlacht trafen er und Heimdall - zwei ewige Kontrahenten - aufeinander und töteten sich am Ende gegenseitig.
+                    </p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div id="hint6-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/goldmünzen_neu.png" alt="Hinweis 6">-->
+            <img src="{{ url_for('static', filename='images/goldmünzen_neu.png') }}" alt="Hinweis 6">
+        </div>
+    </div>
+
+    <div id="hint7-popup" class="popup">
+        <div class="popup-content scroll-popup">
+        <span class="close">&times;</span>
+        <div class="scroll-container">
+            <!--<img src="static/images/pergament_hinweis.png" alt="Schriftrolle" class="scroll-image">-->
+            <img src="{{ url_for('static', filename='images/pergament_hinweis.png') }}" alt="Schriftrolle" class="scroll-image">
+            <div class="scroll-text">
+                <p>Der Donnergott und der Beschützer Midgards<br>Der mächtige Donnergott ist einer der bekanntesten und verehrtesten Götter der nordischen Mythologie. Er verkörpert Kraft, Schutz und Unerschütterlichkeit. Seine Hauptwaffe wurde von den zwei Zwergen Brokk und Sindri geschmiedet. Sein Wagen wird von zwei Ziegenböcken, Tanngnjostr und Tanngrinsnir, gezogen, die ihn mit rasender Geschwindigkeit durch die neun Welten bringen. In manchen Legenden schlachtet er die Ziegen, um sich und seine Gefährten zu ernähren. Doch wenn ihre Knochen unversehrt bleiben, kann er sie mit seiner Waffe wieder zum Leben erwecken. Zu seinen größten Feinden gehört die Midgardschlage Jörgmungandr, die in den Weltmeeren liegt und die Erde umspannt. Die Prophezeiung besagt, dass sie sich im Ragnarök ein letztes Mal begegnen werden: Er wird die Schlange erschlagen, doch nach neun Schritten wird er selbst an ihrem Gift zugrunde gehen.
+                    </p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div id="hint8-popup" class="popup">
+        <div class="popup-content scroll-popup">
+        <span class="close">&times;</span>
+        <div class="scroll-container">
+            <!--<img src="static/images/pergament_hinweis.png" alt="Schriftrolle" class="scroll-image">-->
+            <img src="{{ url_for('static', filename='images/pergament_hinweis.png') }}" alt="Schriftrolle" class="scroll-image">
+            <div class="scroll-text">
+                <p>Der Allvater und Gott der Weisheit <br>Er ist der Mächtigste der nordischen Götter, der Herrscher von Asgard und bekannt als der Gott der Weisheit, des Krieges und der DIchtung. Gemeinsam mit seinen zwei Brüdern Vili und Ve erschuf er die Welt aus dem Körper des Urriesen Ymir: Aus seinem Fleisch formten sie die Erde, aus seinem Blut die Meere, aus seinen Knochen die Berge und aus seinem Schädel das Himmelsgewölbe. Ymirs Gehirn wurde zu den Wolken und aus seinen Wimpern erschufen sie Midgard, die Welt der Menschen. <br>Zudem war er ein unermüdlicher Suchender nach Wissen. In seinem streben nach Weisheit opferte er eins seiner Augen am Brunnen des Mimir, um tiefere Einsichten in das Schicksal der Welt zu erlangen. Doch damit nicht genug. Er hing neun Tage und neun Nächte ohne Nahrung oder Wasser am Weltenbaum Yggdrasil, durchbohrt von seinem eigenen Speer, um die Runen zu entdecken - die Quelle aller Magie und göttlicher Weisheit.
+                    </p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div id="hint9-popup" class="popup">
+        <div class="popup-content scroll-popup">
+        <span class="close">&times;</span>
+        <div class="scroll-container">
+            <!--<img src="static/images/pergament_hinweis.png" alt="Schriftrolle" class="scroll-image">-->
+            <img src="{{ url_for('static', filename='images/pergament_hinweis.png') }}" alt="Schriftrolle" class="scroll-image">
+            <div class="scroll-text">
+                <p>Der Allvater und Gott der Weisheit <br>Er ist der Mächtigste der nordischen Götter, der Herrscher von Asgard und bekannt als der Gott der Weisheit, des Krieges und der DIchtung. Gemeinsam mit seinen zwei Brüdern Vili und Ve erschuf er die Welt aus dem Körper des Urriesen Ymir: Aus seinem Fleisch formten sie die Erde, aus seinem Blut die Meere, aus seinen Knochen die Berge und aus seinem Schädel das Himmelsgewölbe. Ymirs Gehirn wurde zu den Wolken und aus seinen Wimpern erschufen sie Midgard, die Welt der Menschen. <br>Zudem war er ein unermüdlicher Suchender nach Wissen. In seinem streben nach Weisheit opferte er eins seiner Augen am Brunnen des Mimir, um tiefere Einsichten in das Schicksal der Welt zu erlangen. Doch damit nicht genug. Er hing neun Tage und neun Nächte ohne Nahrung oder Wasser am Weltenbaum Yggdrasil, durchbohrt von seinem eigenen Speer, um die Runen zu entdecken - die Quelle aller Magie und göttlicher Weisheit.
+                    </p>
+            </div>
+        </div>
+        </div>
+    </div>
+        <!-- Schriftrollen-Bild -->
+    <div class="scroll-icon">
+        <!--<img src="static/images/schriftrolle.png" alt="Schriftrolle">-->
+        <img src="{{ url_for('static', filename='images/schriftrolle.png') }}" alt="Schriftrolle" >
+    </div>
+    <!-- Neues Popup für die Schriftrolle -->
+<div id="custom-scroll-popup" class="custom-popup">
+    <div class="custom-popup-content">
+        <span class="custom-close">&times;</span>
+        <div class="custom-scroll-container">
+            <!--<img src="static/images/pergament_neu.png" alt="Schriftrolle Hintergrund" class="custom-scroll-image">-->
+            <img src="{{ url_for('static', filename='images/pergament_neu.png') }}" alt="Schriftrolle Hintergrund" class="custom-scroll-image">
+            <div class="custom-scroll-text">
+                <p>In den Tiefen der Zeit, wo die Geschichten der Wikinger in Stein und Holz verewigt sind, ruhen verborgene Wahrheiten.<br>
+            Wer die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, kann uralte Geheimnisse offenbaren.<br>
+            In den Goldschätzen schlummert die Macht der Götter – wer Odins Pfad folgt, wird das Ziel erreichen.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- JavaScript einbinden -->
+    <script src="{{ url_for('static', filename='game_n.js') }}"></script>
+
+</body>
+</html>
