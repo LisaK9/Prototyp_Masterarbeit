@@ -43,6 +43,28 @@ body {
     z-index: -1; /* Hintergrundbild */
 }
 
+.container{
+    position: absolute;
+    bottom: 2%;
+    left: 85%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+
+}
+/* Stile für das Truhen-Bild */
+.chest-image {
+    position: absolute; /* Absolute Positionierung */
+    bottom: 2%; /* Positionierung von unten */
+    left: 15%; /* Positionierung von links */
+    width: 50px; /* Passe die Größe nach Bedarf an */
+    height: auto; /* Höhe passt sich automatisch an */
+    cursor: pointer; /* Zeigt an, dass das Bild klickbar ist */
+    transition: transform 0.3s ease; /* Animation für Hover-Effekt */
+    z-index: 1000; /* Stelle sicher, dass es über anderen Elementen liegt */
+}
+
 /* Code-Eingabe */
 .code-container {
     position: absolute;
