@@ -7,4 +7,3 @@ Flask-SQLAlchemy
 psycopg2-binary
 uuid
 gunicorn
-socket
