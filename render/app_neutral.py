@@ -11,6 +11,7 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import psycopg2
 import socket
+from sqlalchemy import create_engine
 
 def create_app():
     load_dotenv()
@@ -23,14 +24,15 @@ def create_app():
     app = Flask(__name__, static_folder='static', static_url_path='/static')
     app.secret_key = os.getenv("SECRET_KEY")
 
-    DATABASE_URL = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
+    DATABASE_URL = os.getenv("POOL_DATABASE_URL").replace("postgres://", "postgresql+psycopg2://")
 
 
     # **SQLAlchemy für Supabase konfigurieren**
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL  #  Verbindung zu Supabase
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL + "?sslmode=require"  #  Verbindung zu Supabase
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     # Flask-SQLAlchemy-Instanz erstellen
     db = SQLAlchemy(app)
+
 
     # Flask-Session mit SQLAlchemy für Supabase konfigurieren
     app.config["SESSION_TYPE"] = "sqlalchemy"
@@ -45,7 +47,14 @@ def create_app():
 
     # Datenbankverbindung herstellen
     def get_db_connection():
+        #return psycopg2.connect(
+        #return psycopg2.connect(
+        #    os.getenv("POOL_DATABASE_URL"),  # Verwende die Transaction Pooling-URL
+        #    sslmode="require"  # SSL erzwingen
+        #)
         return psycopg2.connect(DATABASE_URL, sslmode="require")
+
+
 
     # Datenbanktabellen erstellen (wird nur einmal ausgeführt)
     def create_tables():

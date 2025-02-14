@@ -27,18 +27,18 @@ def create_app():
     app.secret_key = os.getenv("SECRET_KEY")
 
 
-    DATABASE_URL = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
-
+    DATABASE_URL = os.getenv("POOL_DATABASE_URL").replace("postgres://", "postgresql+psycopg2://")
 
     # **SQLAlchemy für Supabase konfigurieren**
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL  #  Verbindung zu Supabase
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL + "?sslmode=require"  #  Verbindung zu Supabase
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     # Flask-SQLAlchemy-Instanz erstellen
     db = SQLAlchemy(app)
 
+
     # Flask-Session mit SQLAlchemy für Supabase konfigurieren
     app.config["SESSION_TYPE"] = "sqlalchemy"
-    app.config["SESSION_SQLALCHEMY"] = db  # ✅ Supabase wird für Sessions genutzt
+    app.config["SESSION_SQLALCHEMY"] = db  #
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_USE_SIGNER"] = True
     Session(app)
@@ -51,6 +51,10 @@ def create_app():
 
     # Supabase-Datenbankverbindung
     def get_db_connection():
+        #return psycopg2.connect(
+        #    os.getenv("POOL_DATABASE_URL"),  # Verwende die Transaction Pooling-URL
+        #    sslmode="require"  # SSL erzwingen
+        #)
 
         return psycopg2.connect(DATABASE_URL, sslmode="require")
 

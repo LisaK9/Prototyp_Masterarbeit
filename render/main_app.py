@@ -9,9 +9,10 @@ from app_neutral import create_app as create_prototyp_neutral_app
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
-# Erstelle die beiden Apps
+
 app1 = create_prototyp_app()
 app2 = create_prototyp_neutral_app()
+
 
 # Dictionary zur Speicherung der Nutzer-zu-App-Zuordnung
 user_app_mapping = {}
