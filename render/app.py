@@ -55,7 +55,11 @@ def create_app():
 
     # Supabase-Datenbankverbindung
     def get_db_connection():
-        return psycopg2.connect(DATABASE_URL, sslmode="require")
+        ipv4_address = socket.gethostbyname("db.llqxiuvnnmzuktawdtrj.supabase.co")
+        db_url = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
+        db_url = db_url.replace("db.llqxiuvnnmzuktawdtrj.supabase.co", ipv4_address)
+        return psycopg2.connect(db_url, sslmode="require")
+        #return psycopg2.connect(DATABASE_URL, sslmode="require")
 
     # Tabellen erstellen (wird nur einmal ausgeführt)
     def create_tables():
