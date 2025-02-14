@@ -6,7 +6,7 @@ html, body {
     width: 100vw;
     overflow: hidden; /* Scrollen verhindern */
     font-family: 'Caveat', cursive; /* Schriftart für den gesamten Text */
-    font-size: calc(14px + 0.3vw); /* Dynamische Schriftgröße basierend auf der Bildschirmbreite */
+    font-size: calc(12px + 0.5vw); /* Dynamische Schriftgröße basierend auf der Bildschirmbreite */
 }
 
 .container {
@@ -35,23 +35,24 @@ html, body {
 }
 
 .intro-text {
-    top: 0%;
     position: relative;
     z-index: 2;
-    max-width: 60%;
-    padding: 2vh 2vw; /* Relative Padding-Einheiten */
+    max-width: 75%;
+    height: 100%;
+    padding: 1vh 1vw; /* Relative Padding-Einheiten */
     background: rgba(0, 0, 0, 0.4); /* Halbtransparenter Hintergrund für bessere Lesbarkeit */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     color: white;
-    overflow: auto; /* Scrollen innerhalb des Textbereichs ermöglichen */
-    max-height: 70vh; /* Maximale Höhe des Textbereichs */
+    overflow: auto; /* Scrollen verhindern */
+    scrollbar-color: rgba(0, 0, 0, 0) transparent;
     font-size: 1em; /* Relative Schriftgröße */
     display: flex;
     flex-direction: column;
     align-items: center;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0) transparent;
+    justify-content: center;
+    flex: 1; /* Flexibles Layout, um den verfügbaren Platz zu nutzen */
+    margin: 0; /* Abstand nach oben und unten */
 }
 
 h1 {
@@ -61,7 +62,7 @@ h1 {
 
 p {
     font-size: 1em; /* Basis-Schriftgröße */
-    line-height: 1.5; /* Bessere Lesbarkeit */
+    line-height: 1; /* Bessere Lesbarkeit */
     margin-bottom: 1.5vh; /* Abstand nach unten */
 }
 
@@ -89,7 +90,6 @@ p {
         max-width: 90%; /* Mehr Platz für Text auf kleineren Bildschirmen */
         padding: 1vh 2vw;
         font-size: 0.9em; /* Kleinere Schriftgröße */
-        max-height: 80vh; /* Mehr Platz für Text auf kleineren Bildschirmen */
     }
 
     h1 {
