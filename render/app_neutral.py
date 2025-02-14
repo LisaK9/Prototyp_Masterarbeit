@@ -25,10 +25,6 @@ def create_app():
 
     DATABASE_URL = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
 
-    # Erzwingt IPv4, indem der Hostname in eine IPv4-Adresse aufgelöst wird
-    hostname = "db.llqxiuvnnmzuktawdtrj.supabase.co"
-    ipv4_address = socket.gethostbyname(hostname)  # Wandelt in IPv4 um
-    DATABASE_URL = DATABASE_URL.replace(hostname, ipv4_address)
 
     # **SQLAlchemy für Supabase konfigurieren**
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL  #  Verbindung zu Supabase
@@ -49,11 +45,7 @@ def create_app():
 
     # Datenbankverbindung herstellen
     def get_db_connection():
-        ipv4_address = socket.gethostbyname("db.llqxiuvnnmzuktawdtrj.supabase.co")
-        db_url = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
-        db_url = db_url.replace("db.llqxiuvnnmzuktawdtrj.supabase.co", ipv4_address)
-        return psycopg2.connect(db_url, sslmode="require")
-        #return psycopg2.connect(DATABASE_URL, sslmode="require")
+        return psycopg2.connect(DATABASE_URL, sslmode="require")
 
     # Datenbanktabellen erstellen (wird nur einmal ausgeführt)
     def create_tables():
