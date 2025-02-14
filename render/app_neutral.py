@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import psycopg2
+import socket
 
 def create_app():
     load_dotenv()
@@ -23,6 +24,11 @@ def create_app():
     app.secret_key = os.getenv("SECRET_KEY")
 
     DATABASE_URL = os.getenv("DATABASE_URL", "").replace("postgres://", "postgresql+psycopg2://")
+
+    # Erzwingt IPv4, indem der Hostname in eine IPv4-Adresse aufgelöst wird
+    hostname = "db.llqxiuvnnmzuktawdtrj.supabase.co"
+    ipv4_address = socket.gethostbyname(hostname)  # Wandelt in IPv4 um
+    DATABASE_URL = DATABASE_URL.replace(hostname, ipv4_address)
 
     # **SQLAlchemy für Supabase konfigurieren**
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL  #  Verbindung zu Supabase
