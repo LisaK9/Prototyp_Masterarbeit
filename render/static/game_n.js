@@ -258,7 +258,7 @@ function sendChatbotFeedback(riddleNumber) {
     const feedbackMessages = {
         1: "Die korrekte Auswahl der Runen wurde erkannt. Die erste Zahl des Codes ist bestätigt. Nächster Schritt: Reiseroute auf der Weltkarte.",
         2: "Die 9-Weltenkarte wurde korrekt interpretiert. Fortfahren mit den Goldschätzen.",
-        3: "Der vollständige Code wurde entschlüsselt. Enthüllung der Wahrheit wird mit dem Öffnen der Truhe eingeleitet."
+        3: "Der vollständige Code wurde entschlüsselt. Die Truhe kann nun geöffnet werden."
     };
 
 
