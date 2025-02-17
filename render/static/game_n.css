@@ -159,7 +159,7 @@ body {
     max-width: 80%;
     padding: 10px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .message.user p {
@@ -312,7 +312,7 @@ body {
     position: absolute;
     /*z-index:1;
     font-family: 'Caveat', cursive; /* Schriftart für den Text */
-    font-size: 12px; /* Standard-Schriftgröße */
+    font-size: 14px; /* Standard-Schriftgröße */
     color: #000; /* Textfarbe */
     top: 50%;
     left: 50%;
