@@ -147,6 +147,22 @@ function saveBotRequestsToDatabase(riddleNumber, requestCount) {
     .catch(error => console.error('Fehler beim Speichern der Bot-Anfragen:', error));
 }
 
+// Funktion, um die Truhe klickbar zu machen
+function makeChestClickable() {
+    const chestImage = document.querySelector('.chest-image');
+    if (chestImage) {
+        chestImage.style.cursor = 'pointer'; // Zeige einen Zeiger an, um anzuzeigen, dass die Truhe klickbar ist
+        chestImage.addEventListener('click', function() {
+            // Überprüfe, ob der gesamte Code korrekt eingegeben wurde
+            if (currentRiddle === 3 && attemptsTracker[3] > 0) {
+                // Öffne eine neue HTML-Seite
+                window.location.href = '/geheimnis_n'; // Ändere '/neue_seite.html' zu deiner gewünschten Seite
+            }
+        });
+    }
+}
+
+
 function checkDigit() {
     const input = document.getElementById(`code-digit-${currentRiddle}`);
     const feedback = document.getElementById('code-feedback');
@@ -203,6 +219,7 @@ function checkDigit() {
                 feedback.textContent = "Code erfolgreich eingegeben!";
                 // Speichere die Versuche in der Datenbank
                 saveAttemptsToDatabase();
+                makeChestClickable();
             }
         } else {
             feedback.textContent = "Falsch! Versuche es erneut.";

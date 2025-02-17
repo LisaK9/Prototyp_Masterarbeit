@@ -153,6 +153,11 @@ def create_app():
 
         return render_template("game_n.html")
 
+    # Neue Route für die Erfolgsseite
+    @app.route("/geheimnis_n")
+    def geheimnis():
+        return render_template("geheimnis_n.html")
+
 
     @app.route("/chat", methods=["POST"])
     def chat():

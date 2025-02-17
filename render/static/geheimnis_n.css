@@ -1,0 +1,76 @@
+/* Grundlegende Stile */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Scrollen verhindern */
+    font-family: 'Caveat', cursive; /* Schriftart für den gesamten Text */
+    font-size: calc(12px + 0.5vw); /* Dynamische Schriftgröße basierend auf der Bildschirmbreite */
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* Scrollen im Container verhindern */
+}
+
+.container img {
+    max-width: 80%; /* Bild nimmt maximal 80 % der Container-Breite ein */
+    max-height: 50vh; /* Bild nimmt maximal 50 % der Viewport-Höhe ein */
+    object-fit: contain; /* Bild wird proportional skaliert */
+    margin: 20px 0; /* Abstand oben und unten */
+}
+
+h1 {
+    font-size: 1.5em; /* Größere Schrift für Überschriften */
+    margin-bottom: 1vh; /* Abstand nach unten */
+}
+
+p {
+    font-size: 0.9em; /* Basis-Schriftgröße */
+    line-height: 1; /* Bessere Lesbarkeit */
+    margin-bottom: 1vh; /* Abstand nach unten */
+    padding: 0 10%; /* Text nicht zu breit machen */
+}
+
+.button {
+    display: inline-block;
+    padding: 1vh 2vw; /* Relative Padding-Einheiten */
+    font-size: 1em; /* Relative Schriftgröße */
+    color: #fff;
+    background: linear-gradient(45deg, #ff6600, #cc3300);
+    text-decoration: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    margin-top: 1vh; /* Abstand nach oben */
+}
+
+.button:hover {
+    background: linear-gradient(45deg, #cc3300, #ff6600);
+    transform: scale(1.05);
+}
+
+/* Anpassungen für kleinere Bildschirme */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em; /* Kleinere Überschrift auf kleinen Bildschirmen */
+    }
+
+    .button {
+        padding: 1vh 2vw;
+        font-size: 0.9em;
+    }
+
+    .container img {
+        max-width: 90%; /* Bild etwas größer auf kleinen Bildschirmen */
+        max-height: 40vh; /* Bild etwas kleiner auf kleinen Bildschirmen */
+    }
+}
