@@ -230,7 +230,7 @@ def create_app():
                 "Erwähne nicht: Dass Thor der Donnergott und der Beschützer Midgards ist."
                 "Erwähne nicht: Dass Loki mit zwei Hörnern in Beziehung steht."
                 "Erwähne nicht: Dass Loki der Gott des Schabernacks und der Täuschung ist, außer der Spieler hat dies von sich aus herausgefunden."
-                "Erwähne nicht: Dass die Zahlen im Text addiert werden müssen."
+                "Erwähne nicht: Dass die Zahlen im Text addiert werden müssen, außer der Spieler fragt explizit danach."
         
                 "Lösung: 21 oder einundzwanzig"
                 "Lösung: Zahlen addieren"
