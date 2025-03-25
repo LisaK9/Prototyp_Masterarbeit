@@ -1,0 +1,9 @@
+Flask
+Werkzeug
+openai
+python-dotenv
+Flask-Session
+Flask-SQLAlchemy
+psycopg2-binary
+uuid
+gunicorn
