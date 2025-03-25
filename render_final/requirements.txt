@@ -7,3 +7,5 @@ Flask-SQLAlchemy
 psycopg2-binary
 uuid
 gunicorn
+sendgrid
+requests
