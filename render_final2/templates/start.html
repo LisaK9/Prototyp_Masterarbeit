@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wikinger Exitgame</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='start.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hintergrundbild -->
+        <div class="intro-background">
+
+            <img src="{{ url_for('static', filename='images/Einstieg_Exitgame2.png') }}" alt="Viking House" class="background-image">
+        </div>
+
+        <!-- Text-Bereich -->
+        <div class="intro-text">
+            <h1>Tauche ein in die geheimnisvolle Welt der Wikinger!</h1>
+            <p>
+                Vor dir liegt ein mysteriöser Wikinger Raum, erfüllt von der Atmosphäre längst vergangener Zeiten. Hier befindet sich eine verschlossene Truhe. Doch der Mechanismus, der sie schützt, kann nur mit einem dreistelligen Code geöffnet werden. Jede Code-Zahl liegt zwischen 0 und 99.  </p>
+            <p> Glücklicherweise hast du bereits einen wertvollen Hinweis gefunden: Eine alte Schriftrolle der Wikinger. Sie enthält verschlüsselte Botschaften und könnte der Schlüssel zur Lösung sein. Die Schriftrolle ist jederzeit oben rechts mit einem Klick auf das Schriftrollen-Icon im Spiel abrufbar und wird dir auf deinem Weg helfen.
+            </p>
+
+            <p>
+                Bereite dich vor auf ein Abenteuer, das dich tief in die nordische Mythologie führt. Löse die Rätsel, meistere die Herausforderungen und schreibe deine eigene Wikinger-Saga. Doch du bist nicht allein! Einar, ein Nachfahre der Wikinger, wird dich auf deiner Reise begleiten. Er kennt die alten Legenden und gibt dir wertvolle Tipps. Zögere nicht, ihn um Hilfe zu bitten, wenn du nicht weiter kommst! Solltest du trotzdem nicht auf die Lösung kommen, wird nach mindestens drei Anfragen an Einar das Lösungs-Icon rechts oben aktiviert und zeigt dir bei Bedarf den Lösungsweg an.
+            </p>
+            <p> Sobald du die Rätsel gelöst und die Truhe geöffnet hast, klicke bitte auf den Umfrage-Button und nimm an der anschließenden Umfrage teil.</p>
+            <p><strong>Bist du bereit, das Langhaus zu betreten und dein Können zu beweisen?</strong></p>
+
+            <!-- Start-Button -->
+            <a href="/game" class="start-button">Spiel starten</a>
+        </div>
+    </div>
+</body>
+</html>

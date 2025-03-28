@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de"> <!-- Sprache auf Deutsch geändert -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viking Exit Game</title>
+    <!-- Einbindung von "Caveat" -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+    <!--<link rel="stylesheet" href="static/game.css">  CSS verlinken -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='game.css') }}">
+</head>
+<body>
+    <!-- Bildcontainer -->
+    <div class="image-container">
+        <div class="background">
+        <img src="{{ url_for('static', filename='images/hintergrund3neu.png') }}" alt="hintergrund" >
+        </div>
+        <div class="image-wrapper">
+
+            <!-- Unsichtbare Klickflächen für Hinweise -->
+            <div class="hint-area" id="hint1-area" style="bottom: 0%; left: 30%; width: 37%; height: 17%;"></div>
+            <div class="hint-area" id="hint2-area" style="bottom: 18%; left: 33%; width: 33%; height: 7%;"></div>
+            <div class="hint-area" id="hint3-area" style="bottom: 49%; left: 35%; width: 28%; height: 36%;"></div>
+
+
+
+        </div>
+    </div>
+
+    <div class="sidebar_right">
+        <div class="background-sb">
+            <img src="{{ url_for('static', filename='images/hintergrund3 - Kopie2.png') }}" alt="hintergrund-sb">
+        </div>
+        <div class="container">
+        <!-- Truhen-Bild -->
+            <img src="{{ url_for('static', filename='images/truhe_neu1.png') }}" alt="Truhe" class="chest-image">
+        </div>
+        <!-- Code-Eingabe -->
+        <div class="code-container">
+            <div class= "code-input" id="code-input">
+            <!-- Eingabefelder für den Code -->
+                <input type="text" id="code-digit-1" maxlength="2">
+                <input type="text" id="code-digit-2" maxlength="2" disabled>
+
+            </div>
+            <!-- Feedback-Nachricht -->
+            <div id="code-feedback"></div>
+
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="background-sbl">
+            <img src="{{ url_for('static', filename='images/hintergrund-bot1.png') }}" alt="hintergrund-sbl">
+        </div>
+
+        <!-- Avatar-Bild und Chat-Container -->
+        <div class="avatar-container">
+            <img src="/static/images/avatar.png" alt="Avatar" class="avatar-image">
+            <div class="chat-container" id="chat-container">
+                <div class="chatbox" id="chat-window">
+                    <!-- Hier werden die Chat-Nachrichten dynamisch eingefügt -->
+                </div>
+                <div class="loading-dots" id="loading-dots" style="display: none;">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+                </div>
+                <input type="text" id="chat-input" placeholder="Deine Nachricht...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay für Popups -->
+    <div id="popup-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 999;"></div>
+
+    <!-- Popups für Hinweise -->
+    <div id="hint1-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/steintafel_neu.png" alt="Hinweis 1">-->
+            <img src="{{ url_for('static', filename='images/steintafel_neu1.png') }}" alt="Hinweis 1">
+        </div>
+    </div>
+
+    <div id="hint2-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/balkentest.png" alt="Hinweis 2">-->
+            <img src="{{ url_for('static', filename='images/balkentest.png') }}" alt="Hinweis 2">
+        </div>
+    </div>
+
+    <div id="hint3-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <!--<img src="static/images/9weltenneu_test.png" alt="Hinweis 3">-->
+            <img src="{{ url_for('static', filename='images/9weltenneu1.png') }}" alt="Hinweis 3">
+        </div>
+    </div>
+
+
+        <!-- Schriftrollen-Bild -->
+    <div class="scroll-icon">
+        <!--<img src="static/images/schriftrolle.png" alt="Schriftrolle">-->
+        <img src="{{ url_for('static', filename='images/button_schriftrolle1.png') }}" alt="Schriftrolle" >
+    </div>
+    <div class="lösung">
+        <!--<img src="static/images/schriftrolle.png" alt="Schriftrolle">-->
+        <img src="{{ url_for('static', filename='images/button_lösung1.png') }}" alt="Lösung" id="lösung-button" >
+    </div>
+    <!-- Neues Popup für die Schriftrolle -->
+     <!-- Neues Popup für die Schriftrolle -->
+    <div id="custom-scroll-popup" class="popup">
+        <div class="popup-content2">
+            <span class="custom-close">&times;</span>
+            <!--<img src="static/images/pergament_neu.png" alt="Schriftrolle Hintergrund" class="custom-scroll-image">-->
+                <img src="{{ url_for('static', filename='images/pergament_neu.png') }}" alt="Schriftrolle Hintergrund" class="custom-scroll-image">
+                <div class="hinweis-scroll-text">
+                    <p>1. In den Tiefen der Zeit, wo die Geschichten der Wikinger in Stein und Holz verewigt sind, ruhen verborgene Wahrheiten. <br>2. Wer anschließend die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, wird das Ziel erreichen.</p>
+                </div>
+        </div>
+    </div>
+
+    <div id="lösungpopup" class="popup">
+        <div class="popup-content2">
+            <span class="custom-close">&times;</span>
+            <!--<img src="static/images/pergament_neu.png" alt="Schriftrolle Hintergrund" class="custom-scroll-image">-->
+                <img src="{{ url_for('static', filename='images/pergament_neu.png') }}" alt="Schriftrolle Hintergrund" class="custom-scroll-image">
+                <div class="lösung-scroll-text" id="lösung1">
+                    <p>Mit einem Klick auf die Steintafel öffnet sich ein Runen-Alphabet. Dieses wird benötigt, um eine Runenabfolge zu übersetzen. Oberhalb der Steintafel sind Runen in Holz eingraviert. Mit einen Klick darauf öffnet sich eine Runenabfolge. Diese sind mit einem Punktemuster versehen. Die dicken Punkte kennzeichnen die relevanten Runen. Die Anzahl dieser Punkte gibt die Reihenfolge vor. Aus der Übersetzung ergibt sich die Zahl 9.</p>
+                </div>
+                <div class="lösung-scroll-text" id="lösung2">
+                    <p>Mit einem Klick auf den abgebildeten Baum öffnet sich eine 9 Welten Karte. Hier muss eine Route der genannten Welten in genau dieser Reihenfolge gebildet werden. Wenn man dieser Route der Reihe nach folgt, ergibt sich eine 2, die nach rechts gedreht wurde.</p>
+                </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- JavaScript einbinden -->
+
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>

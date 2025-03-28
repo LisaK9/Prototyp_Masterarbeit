@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umfrage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f1e3;
+            padding: 2em;
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #4B2E1D;
+        }
+        form {
+            background: #fff;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .frageblock {
+            margin-bottom: 2em;
+        }
+        .frageblock label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+        .likert {
+            display: flex;
+            justify-content: space-between;
+        }
+        .likert label {
+            text-align: center;
+            flex: 1;
+        }
+        .likert input {
+            margin-bottom: 0.5em;
+        }
+        button {
+            display: block;
+            margin: auto;
+            padding: 0.7em 2em;
+            font-size: 1em;
+            background: #6f4f28;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        select {
+            width: 100%;
+            padding: 0.5em;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Umfrage zum Exitgame</h1>
+    <form action="/submit_survey" method="POST">
+        <input type="hidden" name="session_id" value="{{ session.sid }}">
+
+        <!-- Demografische Fragen -->
+        <div class="frageblock">
+            <label for="alter">1. Wie alt bist du?</label>
+            <select name="alter" id="alter" required>
+                <option value="">Bitte wählen</option>
+                <option value="<18">&lt;18</option>
+                <option value="18-25">18–25</option>
+                <option value="26-35">26–35</option>
+                <option value="36-45">36–45</option>
+                <option value=">45">&gt;45</option>
+            </select>
+        </div>
+
+        <div class="frageblock">
+            <label for="geschlecht">2. Geschlecht</label>
+            <select name="geschlecht" id="geschlecht" required>
+                <option value="">Bitte wählen</option>
+                <option value="m">m</option>
+                <option value="w">w</option>
+                <option value="d">divers</option>
+            </select>
+        </div>
+
+        <div class="frageblock">
+            <label for="bildungsstand">3. Was ist dein höchster Bildungsabschluss?</label>
+            <select name="bildungsstand" id="bildungsstand" required>
+                <option value="">Bitte wählen</option>
+                <option value="kein Abschluss">kein Abschluss</option>
+                <option value="Hauptschulabschluss">Hauptschulabschluss</option>
+                <option value="Realschulabschluss">Realschulabschluss</option>
+                <option value="(Fach-)Hochschulreife">(Fach-)Hochschulreife</option>
+                <option value="Bachelorabschluss">Bachelorabschluss</option>
+                <option value="Masterabschluss oder höher">Masterabschluss oder höher</option>
+            </select>
+        </div>
+
+        <div class="frageblock">
+            <label for="exitgame_erfahrung">4. Hattest du bereits Erfahrung mit Exitgames?</label>
+            <select name="exitgame_erfahrung" id="exitgame_erfahrung" required>
+                <option value="">Bitte wählen</option>
+                <option value="ja">ja</option>
+                <option value="nein">nein</option>
+            </select>
+        </div>
+
+        <div class="frageblock">
+            <label for="chatbot_nutzung">5. Wie häufig interagierst du mit einem Chatbot?</label>
+            <select name="chatbot_nutzung" id="chatbot_nutzung" required>
+                <option value="">Bitte wählen</option>
+                <option value="täglich">täglich</option>
+                <option value="wöchentlich">wöchentlich</option>
+                <option value="monatlich">monatlich</option>
+                <option value="nie">nie</option>
+            </select>
+        </div>
+
+        {% set fragen = [
+            "Die Kommunikation mit dem Chatbot war menschlich",
+            "Der Chatbot vermittelte Kompetenz",
+            "Ich habe die Hinweise des Chatbots hinterfragt",
+            "Die Hinweise des Chatbots waren nützlich",
+            "Ich war auf die Hilfe des Chatbots angewiesen",
+            "Ich habe zunächst versucht, das Problem eigenständig zu lösen",
+            "Ich habe nach einem Hinweis versucht, eigene Fehler zu erkennen und zu korrigieren",
+            "Ich habe mich auf den Chatbot mehr verlassen, als auf meine eigene Problemlösungskompetenz",
+            "Ich habe mich während des Spiels frustriert gefühlt",
+            "Der Chatbot hat meine Frustration reduziert"
+        ] %}
+
+        {% for frage in fragen %}
+        <div class="frageblock">
+            <label>{{ loop.index+5 }}. {{ frage }}</label>
+            <div class="likert">
+                <label><input type="radio" name="frage{{ loop.index }}" value="1" required>1<br>stimme überhaupt nicht zu</label>
+                <label><input type="radio" name="frage{{ loop.index }}" value="2">2</label>
+                <label><input type="radio" name="frage{{ loop.index }}" value="3">3</label>
+                <label><input type="radio" name="frage{{ loop.index }}" value="4">4</label>
+                <label><input type="radio" name="frage{{ loop.index }}" value="5">5<br>stimme voll und ganz zu</label>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="frageblock">
+            <label for="vorgehen">16. Wie bist du beim Lösen der Rätsel vorgegangen? (Beispiel: „Ich habe mir zuerst alle Elemente angeschaut und versucht, ein Muster zu erkennen. Danach habe ich Schritt für Schritt mögliche Kombinationen ausprobiert.“ / „Ich habe intuitiv geraten und dann versucht, über Ausschluss die richtige Lösung zu finden.“ / „Ich habe versucht, das Problem in kleinere Teilaufgaben zu zerlegen.“)</label>
+            <textarea name="vorgehen" id="vorgehen" rows="4" required style="width:100%;"></textarea>
+        </div>
+
+        <div class="frageblock">
+            <label for="kommunikation">17. Wie hast du die Kommunikation mit dem Chatbot erlebt? (z.B. distanziert, hilfreich, störend, sympathisch,…)</label>
+            <textarea name="kommunikation" id="kommunikation" rows="4" required style="width:100%;"></textarea>
+        </div>
+
+        <div class="frageblock">
+            <label for="interaktion">18. Wie hat die Interaktion mit dem Chatbot deine Herangehensweise an die Aufgabe beeinflusst? (Beispiel: „Der Chatbot hat mir einen Denkanstoß gegeben, durch den ich meinen Lösungsweg geändert habe.“ / „Seine Hinweise haben meine Vermutung bestätigt, also bin ich bei meiner Strategie geblieben.“ / „Ich habe mich durch die Art der Hinweise verunsichert gefühlt und wusste nicht, wie ich weitermachen soll.“)</label>
+            <textarea name="interaktion" id="interaktion" rows="4" required style="width:100%;"></textarea>
+        </div>
+
+        <div class="frageblock">
+            <label for="feedback">19. Möchtest du sonst noch etwas mitteilen?</label>
+            <textarea name="feedback" id="feedback" rows="4" style="width:100%;"></textarea>
+        </div>
+
+
+
+        <button type="submit">Absenden</button>
+    </form>
+</body>
+</html>
