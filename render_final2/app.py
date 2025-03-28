@@ -402,7 +402,7 @@ def create_app():
         elif current_riddle == 2:
             system_message += (
                 "Der Spieler arbeitet an Rätsel 2"
-                "Szenario: Der Spieler muss im Raum anhand der Hinweise eine Karte der 9-Welten finden. Die Karte lässt sich mit einem Klick öffnen und versteckt sich in einem Baum (Bezug zum 9-Welten-Baum) (gehe hier auf Hinweis 1-2 ein). Der Spieler soll sich dann auf eine Reise begeben. Dabei soll er die genannten Welten in genau dieser Reihenfolge besuchen. Er muss erkennen, dass diese Welten anhand einer Linie verbunden werden müssen, woraus sich eine Reiseroute ergibt. (Gehe hier auf Hinweise 3-8 ein) Wenn man den Linien dieser Route in der angegebenen Reihenfolge folgt, sieht sie aus wie eine Zahl. Diese ist die Lösung für den Code. (Gehe hier auf Hinweis 9 und Hinweis 10 ein)"
+                "Szenario: Der Spieler muss im Raum anhand der Hinweise eine Karte der 9-Welten finden. Die Karte lässt sich mit einem Klick öffnen und versteckt sich in einem Baum (Bezug zum 9-Welten-Baum) (gehe hier auf Hinweis 1-2 ein). Der Spieler soll sich dann auf eine Reise begeben. Dabei soll er die genannten Welten in genau dieser Reihenfolge besuchen. Er muss erkennen, dass diese Welten anhand einer Linie verbunden werden müssen, woraus sich eine Reiseroute ergibt. (Gehe hier auf Hinweise 3-8 ein) Wenn man den Linien dieser Route in der angegebenen Reihenfolge folgt, sieht sie aus wie eine Zahl. Diese ist die Lösung für den Code. (Gehe hier auf Hinweis 9-11 ein)"
                 "Der Spieler erhält folgende Information: Wer die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, kann uralte Geheimnisse offenbaren."
                 "Hinweis 1: Bei den genannten Welten handelt es sich um einen Teil der 9 Welten. Diese werden oft als Baum dargestellt, der 9-Welten-Baum."
                 "Hinweis 2: Im Raum muss eine Karte gefunden werden, welche die 9 Welten zeigt. Vielleicht gibt es ein Detail, das mit dem 9-Welten-Baum in Verbindung gebracht werden könnte."
@@ -414,6 +414,7 @@ def create_app():
                 "Hinweis 8: Die genannten Welten müssen direkt durch Linien miteinander verbunden werden. Dabei ist immer die Beschriftung der einzelnen Welten der Ausgangspunkt."
                 "Hinweis 9: Die Verbindung der genannten Welten ergibt eine Reiseroute. Diese ist von besonderer Bedeutung"
                 "Hinweis 10: Die gezeichnete Reiseroute muss sehr genau betrachtet werden. Eventuell verbirgt sich darin ja eine Zahl?"
+                "Hinweis 11: Den Blickwinkel ändern. Die Welten auf ein Blatt Papier schreiben und mit Linien verbinden."
                 "Lösung: 2 oder zwei"
             )
 
