@@ -165,6 +165,7 @@ def create_app():
         if request.method == 'POST':
             email = request.form['email']
             code = generate_verification_code()
+            session['email'] = email
 
             # Session initialisieren, falls noch nicht geschehen
             if 'initialized' not in session:
@@ -204,12 +205,7 @@ def create_app():
         if request.method == 'POST':
             email = request.form['email']
             code = request.form['code']
-
-            # Session initialisieren, falls noch nicht geschehen
-            if 'initialized' not in session:
-                session['initialized'] = True
             session_id = session.sid
-            session['email'] = email
 
             # Code und die Session-ID in der Datenbank prüfen
             conn = get_db_connection()
