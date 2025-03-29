@@ -130,7 +130,7 @@ def create_app():
                                         chatbot TEXT,
                                         frage1 INTEGER, frage2 INTEGER, frage3 INTEGER, frage4 INTEGER, frage5 INTEGER,
                                         frage6 INTEGER, frage7 INTEGER, frage8 INTEGER, frage9 INTEGER, frage10 INTEGER,
-                                        feedback TEXT,
+                                        frage11 INTEGER, frage12 INTEGER, feedback TEXT,
                                         loesungsweg TEXT,
                                         kommunikation TEXT,
                                         interaktion TEXT,
@@ -323,7 +323,7 @@ def create_app():
         chatbot = request.form.get("chatbot_nutzung")
 
         # Likert-Fragen (1–20)
-        likert_responses = [request.form.get(f"frage{i}") for i in range(1, 11)]
+        likert_responses = [request.form.get(f"frage{i}") for i in range(1, 13)]
 
         # Freitextantworten
         feedback = request.form.get("feedback")
@@ -338,11 +338,11 @@ def create_app():
         cur.execute(f'''
                 INSERT INTO survey (
                     session_id, alter, geschlecht, bildung, exitgame, chatbot,
-                    {', '.join([f"frage{i}" for i in range(1, 11)])},
+                    {', '.join([f"frage{i}" for i in range(1, 13)])},
                     feedback, loesungsweg, kommunikation, interaktion
                 ) VALUES (
                     %s, %s, %s, %s, %s, %s,
-                    {', '.join(['%s'] * 10)},
+                    {', '.join(['%s'] * 12)},
                     %s, %s, %s, %s
                 )
             ''', (

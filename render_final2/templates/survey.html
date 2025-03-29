@@ -116,7 +116,7 @@
                 <option value="täglich">täglich</option>
                 <option value="wöchentlich">wöchentlich</option>
                 <option value="monatlich">monatlich</option>
-                <option value="nie">nie</option>
+                <option value="nie">seltener oder nie</option>
             </select>
         </div>
 
@@ -127,10 +127,12 @@
             "Die Hinweise des Chatbots waren nützlich",
             "Ich war auf die Hilfe des Chatbots angewiesen",
             "Ich habe zunächst versucht, das Problem eigenständig zu lösen",
+            "Die Rätsel waren herausfordernd",
+            "Der Chatbot hat mir geholfen, Muster oder Zusammenhänge besser zu erkennen",
             "Ich habe nach einem Hinweis versucht, eigene Fehler zu erkennen und zu korrigieren",
             "Ich habe mich auf den Chatbot mehr verlassen, als auf meine eigene Problemlösungskompetenz",
             "Ich habe mich während des Spiels frustriert gefühlt",
-            "Der Chatbot hat meine Frustration reduziert"
+            "Der Chatbot hat mich motiviert, auch bei Schwierigkeiten weiterzumachen"
         ] %}
 
         {% for frage in fragen %}
@@ -147,22 +149,22 @@
         {% endfor %}
 
         <div class="frageblock">
-            <label for="vorgehen">16. Wie bist du beim Lösen der Rätsel vorgegangen? (Beispiel: „Ich habe mir zuerst alle Elemente angeschaut und versucht, ein Muster zu erkennen. Danach habe ich Schritt für Schritt mögliche Kombinationen ausprobiert.“ / „Ich habe intuitiv geraten und dann versucht, über Ausschluss die richtige Lösung zu finden.“ / „Ich habe versucht, das Problem in kleinere Teilaufgaben zu zerlegen.“)</label>
+            <label for="vorgehen">18. Wie bist du beim Lösen der Rätsel vorgegangen? (Beispiel: „Ich habe mir zuerst alle Elemente angeschaut und versucht, ein Muster zu erkennen. Danach habe ich Schritt für Schritt mögliche Kombinationen ausprobiert.“ / „Ich habe intuitiv geraten und dann versucht, über Ausschluss die richtige Lösung zu finden.“ / „Ich habe versucht, das Problem in kleinere Teilaufgaben zu zerlegen.“)</label>
             <textarea name="vorgehen" id="vorgehen" rows="4" required style="width:100%;"></textarea>
         </div>
 
         <div class="frageblock">
-            <label for="kommunikation">17. Wie hast du die Kommunikation mit dem Chatbot erlebt? (z.B. distanziert, hilfreich, störend, sympathisch,…)</label>
+            <label for="kommunikation">19. Wie hast du die Kommunikation mit dem Chatbot erlebt? (z.B. distanziert, hilfreich, störend, sympathisch,…)</label>
             <textarea name="kommunikation" id="kommunikation" rows="4" required style="width:100%;"></textarea>
         </div>
 
         <div class="frageblock">
-            <label for="interaktion">18. Wie hat die Interaktion mit dem Chatbot deine Herangehensweise an die Aufgabe beeinflusst? (Beispiel: „Der Chatbot hat mir einen Denkanstoß gegeben, durch den ich meinen Lösungsweg geändert habe.“ / „Seine Hinweise haben meine Vermutung bestätigt, also bin ich bei meiner Strategie geblieben.“ / „Ich habe mich durch die Art der Hinweise verunsichert gefühlt und wusste nicht, wie ich weitermachen soll.“)</label>
+            <label for="interaktion">20. Wie hat die Interaktion mit dem Chatbot deine Herangehensweise an die Aufgabe beeinflusst? (Beispiel: „Der Chatbot hat mir einen Denkanstoß gegeben, durch den ich meinen Lösungsweg geändert habe.“ / „Seine Hinweise haben meine Vermutung bestätigt, also bin ich bei meiner Strategie geblieben.“ / „Ich habe mich durch die Art der Hinweise verunsichert gefühlt und wusste nicht, wie ich weitermachen soll.“)</label>
             <textarea name="interaktion" id="interaktion" rows="4" required style="width:100%;"></textarea>
         </div>
 
         <div class="frageblock">
-            <label for="feedback">19. Möchtest du sonst noch etwas mitteilen?</label>
+            <label for="feedback">21. Möchtest du sonst noch etwas mitteilen?</label>
             <textarea name="feedback" id="feedback" rows="4" style="width:100%;"></textarea>
         </div>
 
