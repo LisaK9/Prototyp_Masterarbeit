@@ -178,8 +178,8 @@ body {
 
 .image-wrapper {
     width: 76%;
-    height: 80vh;
-    top: 10%;
+    height: 91vh;
+    top: 0;
     left: 15%;
     margin: 0 auto;
     display: flex;
@@ -327,7 +327,7 @@ body {
 /* Unsichtbare Klickflächen für Hinweise */
 .hint-area {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.3);
     cursor: default;
     z-index: 1001;
 }
@@ -389,13 +389,11 @@ body {
     height: 70%;
     white-space: pre-wrap;
     word-wrap: break-word;
-    padding: 1%;
-    font-size: calc(0.4vw + 1.2vh);
+    padding: 0.5%;
+    font-size: calc(0.8vw + 2vh);
     box-sizing: border-box;
     text-align: center;
-    background-color: white;
     justify-content: center;
-    margin: 0;
 }
 .hinweis-scroll-text {
     color: #000;
@@ -405,7 +403,7 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
     padding: 0.5%;
-    font-size: calc(0.8vw + 1.2vh);
+    font-size: calc(0.8vw + 2vh);
     box-sizing: border-box;
     text-align: center;
     justify-content: center;
@@ -418,7 +416,7 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
     padding: 1%;
-    font-size: calc(0.8vw + 1.2vh);
+    font-size: calc(0.8vw + 0.6vh);
     box-sizing: border-box;
     text-align: center;
 }

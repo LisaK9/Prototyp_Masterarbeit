@@ -19,8 +19,6 @@ function updateHintAreas(currentRiddle) {
         // Hinweise für Rätsel 1
         document.getElementById('hint1-area').style.pointerEvents = 'auto';
         document.getElementById('hint2-area').style.pointerEvents = 'auto';
-    } else if (currentRiddle === 2) {
-        // Hinweise für Rätsel 2
         document.getElementById('hint3-area').style.pointerEvents = 'auto';
     }
 }
@@ -146,7 +144,7 @@ function makeChestClickable() {
         chestImage.style.cursor = 'pointer';
         chestImage.addEventListener('click', function() {
             // Überprüfen, ob der gesamte Code korrekt eingegeben wurde
-            if (currentRiddle === 2 && attemptsTracker[2] > 0) {
+            if (currentRiddle === 1 && attemptsTracker[1] > 0) {
                 allowPageUnload = true;
                 // neue HTML-Seite
                 window.location.href = '/geheimnis_n';
@@ -191,20 +189,11 @@ function checkDigit() {
 
             input.disabled = true; //Eingabefeld sperren
 
-            // nächstes Eingabefeld aktivieren
-            if (currentRiddle < 2) {
-                currentRiddle = data.current_riddle; // Rätselstatus aktualisieren
-                startTimes[currentRiddle] = new Date();  // Startzeit für das nächste Rätsel
-                document.getElementById(`code-digit-${currentRiddle}`).disabled = false;
-                document.getElementById(`code-digit-${currentRiddle}`).focus();
-                // Klickbarkeit der Hinweise für das neue Rätsel
-                updateHintAreas(currentRiddle);
-            } else {
 
-                // Versuche in der Datenbank speichern
-                saveAttemptsToDatabase();
-                makeChestClickable(); //Truhe klickbar machen
-            }
+            // Versuche in der Datenbank speichern
+            saveAttemptsToDatabase();
+            makeChestClickable(); //Truhe klickbar machen
+
         } else {
 
             input.value = ''; // Feld leeren
@@ -245,8 +234,7 @@ function sendChatbotFeedback(riddleNumber) {
 
     // Feedback-Nachrichten für jedes Rätsel
     const feedbackMessages = {
-        1: "Die korrekte Auswahl der Runen wurde erkannt. Die erste Zahl des Codes ist bestätigt. Nächster Schritt: Reise durch die neun Welten.",
-        2: "Die 9-Weltenkarte wurde korrekt interpretiert. Der Code wurde erfolgreich entschtlüsselt und die Truhe kann geöffnet werden."
+        1: "Die korrekte Auswahl der Runen wurde erkannt. Der Code wurde erfolgreich entschtlüsselt und die Truhe kann geöffnet werden."
     };
 
 

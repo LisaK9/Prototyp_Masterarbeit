@@ -27,7 +27,7 @@
             <!-- Unsichtbare Klickflächen für Hinweise -->
             <div class="hint-area" id="hint1-area" style="bottom: 0%; left: 30%; width: 37%; height: 17%;"></div>
             <div class="hint-area" id="hint2-area" style="bottom: 18%; left: 33%; width: 33%; height: 7%;"></div>
-            <div class="hint-area" id="hint3-area" style="bottom: 49%; left: 35%; width: 28%; height: 36%;"></div>
+            <div class="hint-area" id="hint3-area" style="top: 3%; left: 35%; width: 28%; height: 19%;"></div>
 
 
         </div>
@@ -46,7 +46,7 @@
             <div id="code-input">
             <!-- Eingabefelder für den Code -->
                 <input type="text" id="code-digit-1" maxlength="2">
-                <input type="text" id="code-digit-2" maxlength="2" disabled>
+
             </div>
             <!-- Feedback-Nachricht -->
             <div id="code-feedback"></div>
@@ -90,15 +90,20 @@
         <div class="popup-content">
             <span class="close">&times;</span>
             <!--<img src="static/images/balkentest.png" alt="Hinweis 2">-->
-            <img src="{{ url_for('static', filename='images/balkentest.png') }}" alt="Hinweis 2">
+            <img src="{{ url_for('static', filename='images/balken_neu.png') }}" alt="Hinweis 2">
         </div>
     </div>
 
+
     <div id="hint3-popup" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <!--<img src="static/images/9weltenneu_test.png" alt="Hinweis 3">-->
-            <img src="{{ url_for('static', filename='images/9weltenneu1.png') }}" alt="Hinweis 3">
+        <div class="popup-content2">
+        <span class="close">&times;</span>
+        <img src="{{ url_for('static', filename='images/pergament_hinweis.png') }}" alt="Schriftrolle" class="scroll-image">
+            <!--<img src="static/images/pergament_hinweis.png" alt="Schriftrolle" class="scroll-image">-->
+            <div class="scroll-text">
+                <p>Vier Zeichen führen dich:<br> Licht des Tages, Hüter der Nacht, Himmelsfunke und der Jäger in der Dunkelheit.
+                    </p>
+            </div>
         </div>
     </div>
 
@@ -118,7 +123,7 @@
             <!--<img src="static/images/pergament_neu.png" alt="Schriftrolle Hintergrund" class="custom-scroll-image">-->
                 <img src="{{ url_for('static', filename='images/pergament_neu.png') }}" alt="Schriftrolle Hintergrund" class="custom-scroll-image">
                 <div class="hinweis-scroll-text">
-                    <p>1. In den Tiefen der Zeit, wo die Geschichten der Wikinger in Stein und Holz verewigt sind, ruhen verborgene Wahrheiten. <br>2. Wer anschließend die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, wird das Ziel erreichen.</p>
+                    <p>In den Tiefen der Zeit, wo die Geschichten der Wikinger in Stein und Holz verewigt sind, ruhen verborgene Wahrheiten. </p>
                 </div>
         </div>
     </div>
@@ -129,11 +134,9 @@
             <!--<img src="static/images/pergament_neu.png" alt="Schriftrolle Hintergrund" class="custom-scroll-image">-->
                 <img src="{{ url_for('static', filename='images/pergament_neu.png') }}" alt="Schriftrolle Hintergrund" class="custom-scroll-image">
                 <div class="lösung-scroll-text" id="lösung1">
-                    <p>Mit einem Klick auf die Steintafel öffnet sich ein Runen-Alphabet. Dieses wird benötigt, um eine Runenabfolge zu übersetzen. Oberhalb der Steintafel sind Runen in Holz eingraviert. Mit einen Klick darauf öffnet sich eine Runenabfolge. Diese sind mit einem Punktemuster versehen. Die dicken Punkte kennzeichnen die relevanten Runen. Die Anzahl dieser Punkte gibt die Reihenfolge vor. Aus der Übersetzung ergibt sich die Zahl 9.</p>
+                    <p>Mit einem Klick auf die Steintafel öffnet sich ein Runen-Alphabet. Dieses wird benötigt, um eine Runenabfolge zu übersetzen. Oberhalb der Steintafel sind Runen in Holz eingraviert. Mit einen Klick darauf öffnet sich eine Runenabfolge. Diese sind mit Symbolen versehen. Im Raum ist an der Decke im Holz eine Gravur mit vier Zeichen abgebildet. Mit einem Klick darauf öffnet sich eine Botschaft über die relevanten Symbole. Licht des Tages = Sonne, Hüter der Nacht = Mond, Himmelsfunke = Stern, Jäger in der Dunkelheit = Wolf. Die Aufzählung dieser Zeichen ist gleichzeitig die Reihenfolge, in der die relevanten Runen übersetzt werden müssen. Aus der Übersetzung ergibt sich die Zahl 9.</p>
                 </div>
-                <div class="lösung-scroll-text" id="lösung2">
-                    <p>Mit einem Klick auf den abgebildeten Baum öffnet sich eine 9 Welten Karte. Hier muss eine Route der genannten Welten in genau dieser Reihenfolge gebildet werden. Wenn man dieser Route der Reihe nach folgt, ergibt sich eine 2, die nach rechts gedreht wurde.</p>
-                </div>
+
 
         </div>
     </div>

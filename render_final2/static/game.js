@@ -19,8 +19,6 @@ function updateHintAreas(currentRiddle) {
         // Hinweise für Rätsel 1
         document.getElementById('hint1-area').style.pointerEvents = 'auto';
         document.getElementById('hint2-area').style.pointerEvents = 'auto';
-    } else if (currentRiddle === 2) {
-        // HInweise für Rätsel 2
         document.getElementById('hint3-area').style.pointerEvents = 'auto';
     }
 }
@@ -143,7 +141,7 @@ function makeChestClickable() {
         chestImage.style.cursor = 'pointer';
         chestImage.addEventListener('click', function() {
             // Überprüfen, ob der gesamte Code korrekt eingegeben wurde
-            if (currentRiddle === 2 && attemptsTracker[2] > 0) {
+            if (currentRiddle === 1 && attemptsTracker[1] > 0) {
                 allowPageUnload = true;
                 // neue HTML-Seite
                 window.location.href = '/geheimnis';
@@ -186,20 +184,12 @@ function checkDigit() {
 
             input.disabled = true;
 
-            // das nächste Eingabefeld aktivieren
-            if (currentRiddle < 2) {
-                currentRiddle = data.current_riddle;
-                startTimes[currentRiddle] = new Date();  // Startzeit für das nächste Rätsel
-                document.getElementById(`code-digit-${currentRiddle}`).disabled = false;
-                document.getElementById(`code-digit-${currentRiddle}`).focus();
-                // Klickbarkeit der Hinweise für das neue Rätsel aktivieren
-                updateHintAreas(currentRiddle);
-            } else {
 
-                // Versuche in der Datenbank speichern
-                saveAttemptsToDatabase();
-                makeChestClickable();
-            }
+
+            // Versuche in der Datenbank speichern
+            saveAttemptsToDatabase();
+            makeChestClickable();
+
         } else {
 
             input.value = '';
@@ -240,8 +230,8 @@ function sendChatbotFeedback(riddleNumber) {
 
     // Feedback-Nachrichten für jedes Rätsel
     const feedbackMessages = {
-        1: "Hah! Du hast die Zeichen der Ahnen verstanden! Nur die Klugen und Weisen erkennen das verborgene Muster. Ich spüre, dass du den Geist eines echten Skalden in dir trägst! Doch noch ist dein Weg nicht beendet. Dein nächster Schritt führt dich auf eine Reise durch die neun Welten. Mach dich bereit – keine Fahrt verläuft ohne Sturm!",
-        2: "Bei Mjölnirs Zorn, du hast den verborgenen Pfad gesehen! So wie einst meine Vorfahren die Meere mit ihren Drachenbooten durchquerten, hast du die richtige Route gefunden. Ich erinnere mich an die Geschichten am Feuer – von Kriegern, die den Weg durch die Welten kannten. Du hast ihre Spur erkannt! Öffne nun die Truhe und entdecke, was in ihrem Inneren auf dich wartet."
+        1: "Hah! Du hast die Zeichen der Ahnen verstanden! Nur die Klugen und Weisen erkennen das verborgene Muster. Ich spüre, dass du den Geist eines echten Skalden in dir trägst! Öffne nun die Truhe und entdecke, was in ihrem Inneren auf dich wartet."
+
     };
 
     // Ladeanimation anzeigen
