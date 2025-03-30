@@ -327,7 +327,7 @@ body {
 /* Unsichtbare Klickflächen für Hinweise */
 .hint-area {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0);
     cursor: default;
     z-index: 1001;
 }
