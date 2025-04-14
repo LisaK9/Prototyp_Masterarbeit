@@ -77,8 +77,8 @@ def proxy(path):
         headers=dict(response.headers),
     )
     if new_user:
-        flask_response.set_cookie('user_id', user_id, max_age=60 * 60 * 24 * 365)
-        flask_response.set_cookie('user_app', user_app, max_age=60 * 60 * 24 * 365)
+        flask_response.set_cookie('user_id', user_id, max_age=60 * 60 * 24 * 30)
+        flask_response.set_cookie('user_app', user_app, max_age=60 * 60 * 24 * 30)
 
     return flask_response
 if __name__ == "__main__":

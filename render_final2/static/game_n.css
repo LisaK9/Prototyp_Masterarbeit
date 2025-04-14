@@ -403,7 +403,7 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
     padding: 0.5%;
-    font-size: calc(0.8vw + 2vh);
+    font-size: calc(0.8vw + 1.5vh);
     box-sizing: border-box;
     text-align: center;
     justify-content: center;

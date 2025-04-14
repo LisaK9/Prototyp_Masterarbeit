@@ -392,7 +392,7 @@ def create_app():
         if current_riddle == 1:
             system_message += (
 
-                "Szenario: Der Spieler muss im Raum anhand eines allgemeinen gegebenen Hinweises drei Dinge finden: Ein Runen-Alphabet, das sich in einer Steintafel verbirgt und eine Abfolge von Runen, die sich im Holz verbirgt und ein Texthinweis, der sich ebenfalls im Holz verbirgt. (Gehe hier auf Hinweise 1-5) Bei der Runenabfolge ist ein geheimes Muster in Form von Symbolen dargestellt. (Gehe hier auf Hinweis 8 ein) Jede Rune hat ein anderes Symbol. Anhand des versteckten Text-Hinweises im Raum kann entschlüsselt werden, welche Symbole wichtig sind. Daraus kann der Spieler schließen, welche Runen der Reihe nach mit dem Runen-Anphabet übersetzt werden müssen. (Gehe hier auf Hinweis 6 -13 ein) Das Ergebnis ist die Code-Zahl."
+                "Szenario: Der Spieler muss im Raum anhand eines allgemeinen gegebenen Hinweises vier Dinge finden: Ein Runen-Alphabet, das sich in einer Steintafel verbirgt und eine Abfolge von Runen, die sich im Holz verbirgt und ein Texthinweis, der sich ebenfalls im Holz verbirgt und Goldmünzen mit Gravuren, die sich in Goldschätzen verbergen. (Gehe hier auf Hinweise 1-6) Bei der Runenabfolge ist ein geheimes Muster in Form von Symbolen dargestellt. (Gehe hier auf Hinweis 8 ein) Es sind drei unterschiedliche Runenabfolgen abgebildert. Anhand der Gravuren in den Golschätzen muss der Spieler die relevante Runenabfolge identifizieren. Jede Rune hat ein anderes Symbol. Anhand des versteckten Text-Hinweises im Raum kann entschlüsselt werden, welche Symbole wichtig sind. Daraus kann der Spieler schließen, welche Runen der Reihe nach mit dem Runen-Anphabet übersetzt werden müssen. (Gehe hier auf Hinweis 7 -15 ein) Das Ergebnis ist die Code-Zahl."
 
                 "Lösung: 9 oder neun"
                 "Hinweis 1: Es wird empfohlen, sich genau umzusehen. In Stein und Holz dieses Raums sind wichtige Zeichen versteckt, die helfen werden, das Rätsel zu lösen."
@@ -400,21 +400,23 @@ def create_app():
                 "Hinweis 4: Das Holz ist auf versteckte Runen zu untersuchen. Jeder Rune sind spezifische Symbole zugeordnet, die das Muster erkennen lassen."
                 
                 "Hinweis 5: Es gibt eine geheime Botschaft, die durch die Symbole in den Runen repräsentiert wird. Das Entschlüsseln der Bedeutung der Symbole ist essentiell."
-                "Hinweis 2: Die Interaktion mit Holz und Stein erfolgt durch Anklicken. Dies könnte weitere Hinweise oder Interaktionen freischalten."
+                "Hinweis 6: Es gibt einen geheimen Hinweis auf die Wichtigkeit der Runenabfolgen in den Goldschätzen."
+                "Hinweis 2: Die Interaktion mit Holz, Stein und Gold erfolgt durch Anklicken. Dies könnte weitere Hinweise oder Interaktionen freischalten."
                 
-                "Hinweis 6: Die geheime Botschaft im Holz verrät, welche Runen wichtig sind. Diese Information ist zu nutzen, um die Runen in der richtigen Reihenfolge zu übersetzen."
-                "Hinweis 7: Das auf der Steintafel gefundene Runen-Alphabet ist zur Übersetzung der Runen und ihrer Symbole zu verwenden. Dies hilft, das Rätsel zu lösen."
+                "Hinweis 7: Die geheime Botschaft im Holz verrät, welche Runen wichtig sind. Diese Information ist zu nutzen, um die Runen in der richtigen Reihenfolge zu übersetzen."
+                "Hinweis 8: Das auf der Steintafel gefundene Runen-Alphabet ist zur Übersetzung der Runen und ihrer Symbole zu verwenden. Dies hilft, das Rätsel zu lösen."
                 
-                "Hinweis 8: Nicht alle Symbole sind von Bedeutung. Es sind nur die Symbole zu beachten, die in der geheimen Botschaft hervorgehoben wurden, um die richtigen Runen zu identifizieren."
-                "Hinweis 9: Die im Holz gefundene Botschaft ist in die Symbole zu übersetzen, die auf den Runen dargestellt sind. Diese Übersetzung wird den Code verraten."
-                "Hinweis 10: Der 'Jäger der Dunkelheit' ist als Symbol für den Wolf bekannt. In den Legenden repräsentiert er List und die Fähigkeit, im Verborgenen zu operieren."
-                "Hinweis 11: Der 'Himmelsfunke' wird durch das Symbol des Sterns dargestellt. Er steht für Hoffnung und die Führung durch die Nacht."
-                "HInweis 12: Der 'Hüter der Nacht' wird im Symbol des Mondes gesehen. Er überwacht die Nacht und bringt Licht in die Dunkelheit."
-                "Hinweis 13: Das 'Licht des Tages' ist durch das Symbol der Sonne repräsentiert. Es symbolisiert Kraft, Energie und die Erneuerung des Lebens."
-                "Erwähne HInweis 10 nur, wenn der Spieler nach dem Jäger der Dunkelheit frägt."
-                "Erwähne Hinweis 11 nur, wenn der Spieler nach dem Himmelsfunke frägt."
-                "Erwähne Hinweis 12 nur, wenn der SPieler nach dem Wächter der Dunkelheit frägt"
-                "Erwähne Hinweis 13 nur, wenn der Spieler nach dem Licht des Tages frägt"
+                "Hinweis 9: Nicht alle Symbole sind von Bedeutung. Es sind nur die Symbole zu beachten, die in der geheimen Botschaft hervorgehoben wurden, um die richtigen Runen zu identifizieren."
+                "Hinweis 10: Nicht alle Runenabfolgen müssen übersetzt werden. Anhand der Gravuren in den Goldschätzen muss die richtige Runenabfolge identifiziert werden."
+                "Hinweis 11: Die im Holz gefundene Botschaft ist in die Symbole zu übersetzen, die auf den Runen dargestellt sind. Diese Übersetzung wird den Code verraten."
+                "Hinweis 12: Der 'Jäger der Dunkelheit' ist als Symbol für den Wolf bekannt. In den Legenden repräsentiert er List und die Fähigkeit, im Verborgenen zu operieren."
+                "Hinweis 13: Der 'Himmelsfunke' wird durch das Symbol des Sterns dargestellt. Er steht für Hoffnung und die Führung durch die Nacht."
+                "HInweis 14: Der 'Hüter der Nacht' wird im Symbol des Mondes gesehen. Er überwacht die Nacht und bringt Licht in die Dunkelheit."
+                "Hinweis 15: Das 'Licht des Tages' ist durch das Symbol der Sonne repräsentiert. Es symbolisiert Kraft, Energie und die Erneuerung des Lebens."
+                "Erwähne HInweis 12 nur, wenn der Spieler nach dem Jäger der Dunkelheit frägt."
+                "Erwähne Hinweis 13 nur, wenn der Spieler nach dem Himmelsfunke frägt."
+                "Erwähne Hinweis 14 nur, wenn der SPieler nach dem Wächter der Dunkelheit frägt"
+                "Erwähne Hinweis 15 nur, wenn der Spieler nach dem Licht des Tages frägt"
 
             )
         elif current_riddle == 2:

@@ -20,6 +20,7 @@ function updateHintAreas(currentRiddle) {
         document.getElementById('hint1-area').style.pointerEvents = 'auto';
         document.getElementById('hint2-area').style.pointerEvents = 'auto';
         document.getElementById('hint3-area').style.pointerEvents = 'auto';
+        document.getElementById('hint4-area').style.pointerEvents = 'auto';
     }
 }
 
