@@ -143,9 +143,13 @@
             <!--<img src="static/images/pergament_neu.png" alt="Schriftrolle Hintergrund" class="custom-scroll-image">-->
                 <img src="{{ url_for('static', filename='images/pergament_neu.png') }}" alt="Schriftrolle Hintergrund" class="custom-scroll-image">
                 <div class="lösung-scroll-text" id="lösung1">
-                    <p>Mit einem Klick auf die Steintafel öffnet sich ein Runen-Alphabet. Dieses wird benötigt, um eine Runenabfolge zu übersetzen. Oberhalb der Steintafel sind Runen in Holz eingraviert. Mit einen Klick darauf öffnet sich eine Runenabfolge. Diese sind mit Symbolen versehen. Im Raum ist an der Decke im Holz eine Gravur mit vier Zeichen abgebildet. Mit einem Klick darauf öffnet sich eine Botschaft über die relevanten Symbole. Licht des Tages = Sonne, Hüter der Nacht = Mond, Himmelsfunke = Stern, Jäger in der Dunkelheit = Wolf. Die Aufzählung dieser Zeichen ist gleichzeitig die Reihenfolge, in der die relevanten Runen übersetzt werden müssen. Aus der Übersetzung ergibt sich die Zahl 9.</p>
+                    <p class="lösung-step" style="display: none;">Mit einem Klick auf die Steintafel öffnet sich ein Runen-Alphabet. Dieses wird benötigt, um eine Runenabfolge zu übersetzen. </p>
+                    <p class="lösung-step" style="display: none;">Oberhalb der Steintafel sind Runen in Holz eingraviert. Mit einen Klick darauf öffnet sich eine Runenabfolge. Diese sind mit Symbolen versehen und müssen entschlüsselt werden. </p>
+                    <p class="lösung-step" style="display: none;">Im Raum ist an der Decke im Holz eine Gravur mit vier Zeichen abgebildet. Mit einem Klick darauf öffnet sich eine Botschaft über die relevanten Symbole. Licht des Tages = Sonne, Hüter der Nacht = Mond, Himmelsfunke = Stern, Jäger in der Dunkelheit = Wolf. Die Aufzählung dieser Zeichen ist gleichzeitig die Reihenfolge, in der die relevanten Runen übersetzt werden müssen. </p>
+                    <p class="lösung-step" style="display: none;">Nun muss noch die richtige Runenabfolge identifiziert werden. In den Goldschätzen sind zwei Goldmünzen mit der Gravur Mond und Wolf zu sehen. Die Runenabfolge, in der Mond und Wolf direkt aufeinander folgen, ist die richtige. </p>
+                    <p class="lösung-step" style="display: none;">Aus der Übersetzung ergibt sich die Zahl 9.</p>
+                    <button id="lösung-next-button" style="display: none;">Weiter</button>
                 </div>
-
 
         </div>
     </div>

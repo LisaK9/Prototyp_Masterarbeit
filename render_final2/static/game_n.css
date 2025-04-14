@@ -411,16 +411,42 @@ body {
 .lösung-scroll-text {
     color: #000;
     position: absolute;
-    width: 50%;
+    width: 60%;
     height: 70%;
     white-space: pre-wrap;
     word-wrap: break-word;
     padding: 1%;
-    font-size: calc(0.8vw + 0.6vh);
+    font-size: calc(1vw + 1vh);
     box-sizing: border-box;
     text-align: center;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    justify-content: center;
 }
 
+.lösung-step {
+    margin: 0;
+    padding: 0;
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+    line-height: 1;
+}
+
+#lösung-next-button {
+    margin-top: 10px;
+    align-self: center;
+    padding: 10px 25px;
+    font-size: calc(0.8vw + 1vh);
+    font-family: 'Baloo 2', cursive;
+    background-color: #c4a463;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
 
 .custom-close {

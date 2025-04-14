@@ -147,6 +147,25 @@ def create_app():
                                 CONSTRAINT un_session_riddle UNIQUE (session_id, riddle_number)
                             )
                         ''')
+            cur.execute('''
+                CREATE TABLE IF NOT EXISTS hint_clicks (
+                    session_id TEXT,
+                    hint_number INTEGER,
+                    click_count INTEGER DEFAULT 1,
+                    PRIMARY KEY (session_id, hint_number)
+                )
+            ''')
+            cur.execute('''
+                CREATE TABLE IF NOT EXISTS viewed_solution_steps (
+                    id SERIAL PRIMARY KEY,
+                    session_id TEXT NOT NULL,
+                    riddle_number INTEGER NOT NULL,
+                    step_number INTEGER NOT NULL,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    CONSTRAINT unique_step_per_session UNIQUE (session_id, riddle_number, step_number)
+                )
+            ''')
+
             conn.commit()
             cur.close()
             conn.close()
@@ -416,21 +435,7 @@ def create_app():
             )
         elif current_riddle == 2:
             system_message += (
-                "Der Spieler arbeitet an Rätsel 2"
-                "Szenario: Der Spieler muss im Raum anhand der Hinweise eine Karte der 9-Welten finden. Die Karte lässt sich mit einem Klick öffnen und versteckt sich in einem Baum (Bezug zum 9-Welten-Baum) (gehe hier auf Hinweis 1-2 ein). Der Spieler soll sich dann auf eine Reise begeben. Dabei soll er die genannten Welten in genau dieser Reihenfolge besuchen. Er muss erkennen, dass diese Welten anhand einer Linie verbunden werden müssen, woraus sich eine Reiseroute ergibt. (Gehe hier auf Hinweise 3-8 ein) Wenn man den Linien dieser Route in der angegebenen Reihenfolge folgt, sieht sie aus wie eine Zahl. Diese ist die Lösung für den Code. (Gehe hier auf Hinweis 9-11 ein)"
-                "Der Spieler erhält folgende Information: Wer die Welten Niflheim, Jotunheim, Svartalfheim, Asgard, Vanaheim und Midgard bereist, kann uralte Geheimnisse offenbaren."
-                "Hinweis 1: Bei den genannten Welten handelt es sich um einen Teil der 9 Welten. Diese werden oft als Baum dargestellt, der 9-Welten-Baum."
-                "Hinweis 2: Im Raum muss eine Karte gefunden werden, welche die 9 Welten zeigt. Vielleicht gibt es ein Detail, das mit dem 9-Welten-Baum in Verbindung gebracht werden könnte."
-                "Hinweis 3: Verweise auf die vorhandene Information, in der steht, welche Welten man bereisen muss und zähle diese in der richtigen Reihenfolge auf."
-                "Hinweis 4: Die Einhaltung der Reihenfolge der genannten Welten während der Reise ist wichtig."
-                "Hinweis 5: Das Wasser, das auf der Karte abgebildet ist, ist für die Lösung des Rätsels oder die Bildung der Route nicht relevant."
-                "Hinweis 6: Die Anfangsbuchstaben der Welten ist nicht relevant. Es geht darum, die genannten Welten zu bereisen und eine Route zu bilden."
-                "Hinweis 7: Die Welten des Weltenbaums werden oft durch Linien miteinander verbunden."
-                "Hinweis 8: Die genannten Welten müssen direkt durch Linien miteinander verbunden werden. Dabei ist immer die Beschriftung der einzelnen Welten der Ausgangspunkt."
-                "Hinweis 9: Die Verbindung der genannten Welten ergibt eine Reiseroute. Diese ist von besonderer Bedeutung"
-                "Hinweis 10: Die gezeichnete Reiseroute muss sehr genau betrachtet werden. Eventuell verbirgt sich darin ja eine Zahl?"
-                "Hinweis 11: Den Blickwinkel ändern. Die Welten auf ein Blatt Papier schreiben und mit Linien verbinden."
-                "Lösung: 2 oder zwei"
+                "Das Rätsel wurde gelöst"
             )
 
 
@@ -551,7 +556,46 @@ def create_app():
         conn.close()
         return jsonify({'status': 'success'})
 
+    @app.route('/save_hint_click', methods=['POST'])
+    def save_hint_click():
+        data = request.json
+        session_id = data.get('session_id')
+        hint_number = data.get('hint_number')
 
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute('''
+            INSERT INTO hint_clicks (session_id, hint_number, click_count)
+            VALUES (%s, %s, 1)
+            ON CONFLICT (session_id, hint_number)
+            DO UPDATE SET click_count = hint_clicks.click_count + 1
+        ''', (session_id, hint_number))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({'status': 'success'})
+
+    @app.route('/save_solution_step', methods=['POST'])
+    def save_solution_step():
+        data = request.json
+        session_id = data.get('session_id')
+        riddle_number = data.get('riddle_number')
+        step_number = data.get('step_number')
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''
+            INSERT INTO viewed_solution_steps (session_id, riddle_number, step_number)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (session_id, riddle_number, step_number) DO NOTHING
+        ''', (session_id, riddle_number, step_number))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return jsonify({'status': 'success'})
 
     create_tables()
     return app

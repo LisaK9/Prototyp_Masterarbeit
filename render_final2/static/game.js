@@ -2,7 +2,7 @@ const correctCode = [9, 2];
 
 let currentRiddle = 1;
 let allowPageUnload = false; // Standardmäßig keine Erlaubnis zum Verlassen
-
+let solutionStepShown = 0;
 // erstes Eingabefeld beim Laden der Seite aktivieren
 document.getElementById('code-digit-1').disabled = false;
 document.getElementById('code-digit-1').focus();
@@ -212,6 +212,14 @@ document.addEventListener('DOMContentLoaded', function() {
         startTimes[1] = new Date();  // Startzeit für Rätsel 1 setzen
         console.log('Startzeit für Rätsel 1 gesetzt:', startTimes[1]);
     }
+
+    // Begrüßungsnachricht im Chatfenster anzeigen
+    const chatWindow = document.getElementById('chat-window');
+    const botMessageElement = document.createElement('div');
+    botMessageElement.classList.add('message', 'bot');
+    botMessageElement.innerHTML = `<p>Willkommen! Ich bin Einar, ein Nachfahre der Wikinger. Während des Rätsels stehe ich dir mit Rat und Herz zur Seite. Schau dir am besten zunächst den Hinweis in der Schriftrolle an, die du bereits gefunden hast.</p>`;
+    chatWindow.appendChild(botMessageElement);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 });
 
 // Event-Listener für die Eingabefelder, um die Entertaste zu unterstützen
@@ -363,8 +371,24 @@ document.querySelectorAll('.hint-area').forEach(hintArea => {
             console.log(`Popup ${hintId} wird angezeigt`); // Debugging
             popup.style.display = 'block';
         }
+        // Klick in der Datenbank speichern
+        fetch('/save_hint_click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                session_id: sessionId,
+                hint_number: hintNumber
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(`Hinweis ${hintNumber} Klick gespeichert:`, data);
+        })
+        .catch(error => console.error('Fehler beim Speichern des Hinweisklicks:', error));
     });
 });
+
+
 
 // Event-Listener für das Schriftrollen-Bild
 document.querySelector('.scroll-icon').addEventListener('click', function() {
@@ -374,25 +398,52 @@ document.querySelector('.scroll-icon').addEventListener('click', function() {
     }
 });
 
-// Event-Listener für das Lösungs-Button-Bild
-document.getElementById('lösung-button').addEventListener('click', function() {
-    // Überprüfen, ob mindestens 3 Bot-Anfragen für das aktuelle Rätsel gestellt wurden
+document.getElementById('lösung-button').addEventListener('click', function () {
     if (botRequestCounts[currentRiddle] >= 3) {
 
         const popup = document.getElementById('lösungpopup');
         if (popup) {
-            popup.style.display = 'flex'; // Popup anzeigen
-
+            popup.style.display = 'flex';
 
             document.querySelectorAll('.lösung-scroll-text').forEach(text => {
                 text.style.display = 'none';
             });
 
-            // entsprechender Lösungstext basierend auf dem aktuellen Rätsel
             const solutionText = document.getElementById(`lösung${currentRiddle}`);
             if (solutionText) {
                 solutionText.style.display = 'block';
             }
+
+            const steps = document.querySelectorAll(`#lösung${currentRiddle} .lösung-step`);
+
+            // Beim ersten Öffnen: initialisieren & Schritt 1 speichern
+            if (typeof solutionStepShown === 'undefined' || solutionStepShown === null) {
+                solutionStepShown = 0;
+                fetch('/save_solution_step', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        riddle_number: currentRiddle,
+                        step_number: 1
+                    })
+                });
+            }
+
+            // Alle bis dahin gesehenen Schritte anzeigen
+            for (let i = 0; i <= solutionStepShown; i++) {
+                if (steps[i]) steps[i].style.display = 'block';
+            }
+
+            // Weiter-Button anzeigen, wenn noch Schritte da sind
+            const nextButton = document.getElementById('lösung-next-button');
+            if (solutionStepShown < steps.length - 1) {
+                nextButton.style.display = 'block';
+            } else {
+                nextButton.style.display = 'none';
+            }
+
+            // Lösung als "gesehen" speichern (wie bisher)
             fetch('/view_solution', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -407,6 +458,7 @@ document.getElementById('lösung-button').addEventListener('click', function() {
             })
             .catch(error => console.error('Fehler beim Speichern des Lösungsstatus:', error));
         }
+
     } else {
         alert('Du musst mindestens 3 Bot-Anfragen stellen, bevor du die Lösung sehen kannst.');
     }
@@ -467,4 +519,32 @@ window.onbeforeunload = function () {
 };
 
 
+document.getElementById('lösung-next-button').addEventListener('click', function () {
+    const steps = document.querySelectorAll(`#lösung${currentRiddle} .lösung-step`);
+
+    if (solutionStepShown < steps.length - 1) {
+        solutionStepShown++;
+        steps[solutionStepShown].style.display = 'block';
+
+        // Speichern, welcher Schritt angezeigt wurde
+        fetch('/save_solution_step', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                session_id: sessionId,
+                riddle_number: currentRiddle,
+                step_number: solutionStepShown + 1
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(`Lösungsschritt ${solutionStepShown + 1} gespeichert:`, data);
+        })
+        .catch(error => console.error('Fehler beim Speichern des Lösungsschritts:', error));
+
+        if (solutionStepShown === steps.length - 1) {
+            this.style.display = 'none'; // Letzter Schritt erreicht
+        }
+    }
+});
 
