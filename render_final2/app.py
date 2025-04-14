@@ -438,7 +438,6 @@ def create_app():
                 "Das Rätsel wurde gelöst"
             )
 
-
         messages = [
             {"role": "system", "content": system_message},
             *session["conversation_context"]
