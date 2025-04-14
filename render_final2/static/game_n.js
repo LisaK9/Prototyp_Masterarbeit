@@ -366,6 +366,7 @@ document.querySelectorAll('.hint-area').forEach(hintArea => {
             console.log(`Popup ${hintId} wird angezeigt`);
             popup.style.display = 'block';
         }
+        const hintNumber = parseInt(this.id.replace('hint', '').replace('-area', ''));
         // Klick in der Datenbank speichern
         fetch('/save_hint_click', {
             method: 'POST',
