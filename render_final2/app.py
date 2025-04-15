@@ -130,7 +130,7 @@ def create_app():
                                         chatbot TEXT,
                                         frage1 INTEGER, frage2 INTEGER, frage3 INTEGER, frage4 INTEGER, frage5 INTEGER,
                                         frage6 INTEGER, frage7 INTEGER, frage8 INTEGER, frage9 INTEGER, frage10 INTEGER,
-                                        frage11 INTEGER, frage12 INTEGER, feedback TEXT,
+                                        frage11 INTEGER, frage12 INTEGER, frage13 INTEGER, feedback TEXT,
                                         loesungsweg TEXT,
                                         kommunikation TEXT,
                                         interaktion TEXT,
@@ -163,6 +163,14 @@ def create_app():
                     step_number INTEGER NOT NULL,
                     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     CONSTRAINT unique_step_per_session UNIQUE (session_id, riddle_number, step_number)
+                )
+            ''')
+            cur.execute('''
+                CREATE TABLE IF NOT EXISTS used_strategies (
+                    id SERIAL PRIMARY KEY,
+                    session_id TEXT NOT NULL,
+                    strategy TEXT NOT NULL,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             ''')
 
@@ -342,7 +350,7 @@ def create_app():
         chatbot = request.form.get("chatbot_nutzung")
 
         # Likert-Fragen (1–20)
-        likert_responses = [request.form.get(f"frage{i}") for i in range(1, 13)]
+        likert_responses = [request.form.get(f"frage{i}") for i in range(1, 14)]
 
         # Freitextantworten
         feedback = request.form.get("feedback")
@@ -357,11 +365,11 @@ def create_app():
         cur.execute(f'''
                 INSERT INTO survey (
                     session_id, alter, geschlecht, bildung, exitgame, chatbot,
-                    {', '.join([f"frage{i}" for i in range(1, 13)])},
+                    {', '.join([f"frage{i}" for i in range(1, 14)])},
                     feedback, loesungsweg, kommunikation, interaktion
                 ) VALUES (
                     %s, %s, %s, %s, %s, %s,
-                    {', '.join(['%s'] * 12)},
+                    {', '.join(['%s'] * 13)},
                     %s, %s, %s, %s
                 )
             ''', (
@@ -369,6 +377,15 @@ def create_app():
             *likert_responses,
             feedback, loesungsweg, kommunikation, interaktion
         ))
+
+        strategien = request.form.getlist("strategien")  # Liste aller ausgewählten Checkboxen
+
+        if strategien:
+            for strategie in strategien:
+                cur.execute('''
+                    INSERT INTO used_strategies (session_id, strategy)
+                    VALUES (%s, %s)
+                ''', (session_id, strategie))
 
         conn.commit()
         cur.close()

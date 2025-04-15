@@ -461,7 +461,7 @@ document.getElementById('lösung-button').addEventListener('click', function () 
         }
 
     } else {
-        alert('Du musst mindestens 3 Bot-Anfragen stellen, bevor du die Lösung sehen kannst.');
+        alert('Du musst mindestens 3 Anfragen an Einar stellen, bevor du die Lösung sehen kannst.');
     }
 });
 

@@ -27,8 +27,11 @@
         }
         .frageblock label {
             display: block;
-            font-weight: bold;
+            font-weight: normal;
             margin-bottom: 0.5em;
+        }
+        .frageblock > label:first-child {
+            font-weight: bold;
         }
         .likert {
             display: flex;
@@ -120,24 +123,45 @@
             </select>
         </div>
 
+        <div class="frageblock" id="strategien">
+            <label for="strategien">6. Welche der folgenden Strategien/Herangehensweisen hast du beim Lösen des Rätsels eingesetzt? (Mehrfachauswahl möglich)</label>
+            <div>
+                <label><input type="checkbox" name="strategien" value="erkundung"> Ich habe zuerst die Umgebung erkundet, bevor ich eine konkrete Lösungsidee hatte.</label><br>
+                <label><input type="checkbox" name="strategien" value="versuch_und_irrtum"> Ich habe verschiedene Möglichkeiten ausprobiert, ohne vorher einen festen Plan zu haben.</label><br>
+                <label><input type="checkbox" name="strategien" value="hypothesen"> Ich habe Vermutungen über Zusammenhänge aufgestellt und diese gezielt überprüft.</label><br>
+                <label><input type="checkbox" name="strategien" value="analyse"> Ich habe einzelne Hinweise genau analysiert und Stück für Stück zusammengesetzt.</label><br>
+                <label><input type="checkbox" name="strategien" value="reflexion"> Ich habe meine Vorgehensweise bewusst reflektiert und gegebenenfalls angepasst.</label><br>
+                <label><input type="checkbox" name="strategien" value="flexibilitaet"> Ich habe meine Lösungsidee oder mein Vorgehen verändert, wenn neue Informationen nicht mehr dazu gepasst haben.</label><br>
+                <label><input type="checkbox" name="strategien" value="muster"> Ich habe nach wiederkehrenden Zeichen oder Symbolen gesucht, um eine Regel oder ein Muster zu erkennen.</label><br>
+                <label><input type="checkbox" name="strategien" value="wenn_dann"> Ich habe überlegt, was passieren könnte, wenn bestimmte Dinge zusammenhängen oder nacheinander passieren (zum Beispiel: Wenn dieses Symbol wichtig ist, dann muss ich die dazugehörige Rune verwenden.)</label><br>
+                <label><input type="checkbox" name="strategien" value="ausschluss"> Ich habe nach dem Ausschlussprinzip gearbeitet und bewusst irrelevante Hinweise oder Informationen ausgeschlossen.</label><br>
+                <label><input type="checkbox" name="strategien" value="transfer"> Ich habe mein Wissen über Symbole oder Zusammenhänge genutzt, um Hinweise zu verstehen. (z.B. „Der Mond zeigt sich in der Nacht, das habe ich mit einem Hinweis in Verbindung gebracht.“)</label><br>
+                <label><input type="checkbox" name="strategien" value="bot_impuls"> Ich habe versucht das Rätsel eigenständig (ohne Hilfe des Chatbots) zu lösen.</label><br>
+                <label><input type="checkbox" name="strategien" value="ko_konstruktion"> Ich habe mich bewusst auf die Zusammenarbeit mit dem Chatbot eingelassen.</label><br>
+                <label><input type="checkbox" name="strategien" value="keine"> Keine dieser Strategien habe ich bewusst verwendet.</label>
+            </div>
+        </div>
+
+
         {% set fragen = [
-            "Die Kommunikation mit dem Chatbot war menschlich",
-            "Der Chatbot vermittelte Kompetenz",
+            "Ich hatte das Gefühl, mit einem menschenähnlichen Partner zu interagieren",
+            "Der Chatbot hat mir geholfen, mein Vorgehen besser zu strukturieren",
+            "Der Chatbot hat mir geholfen, Muster und Zusammenhänge besser zu erkennen",
+            "Ich habe mein Vorgehen angepasst, wenn der Chatbot neue Perspektiven eingebracht hat",
+            "Durch den Chatbot konnte ich neue Lösungsideen entwickeln",
+            "Der Chatbot hat mich dazu gebracht, mein eigenes Denken und/oder Vorgehen zu hinterfragen",
+            "Ich habe meine Lösungsideen gemeinsam mit dem Chatbot entwickelt",
+            "Ich hatte das Gefühl, vom Chatbot verstanden zu werden",
             "Ich habe die Hinweise des Chatbots hinterfragt",
-            "Die Hinweise des Chatbots waren nützlich",
-            "Ich war auf die Hilfe des Chatbots angewiesen",
-            "Ich habe zunächst versucht, das Problem eigenständig zu lösen",
-            "Die Rätsel waren herausfordernd",
-            "Der Chatbot hat mir geholfen, Muster oder Zusammenhänge besser zu erkennen",
-            "Ich habe nach einem Hinweis versucht, eigene Fehler zu erkennen und zu korrigieren",
-            "Ich habe mich auf den Chatbot mehr verlassen, als auf meine eigene Problemlösungskompetenz",
-            "Ich habe mich während des Spiels frustriert gefühlt",
-            "Der Chatbot hat mich motiviert, auch bei Schwierigkeiten weiterzumachen"
+            "Ich habe eher den Chatbot gefragt als selbst nachzudenken",
+            "Der Chatbot hat mein Vertrauen in meine eigenen Fähigkeiten gestärkt",
+            "Der Chatbot hat mich motiviert, auch bei Schwierigkeiten weiterzumachen",
+            "Durch die Zusammenarbeit mit dem Chatbot konnte ich meine eigenen Stärken und Schwächen beim Problemlösen besser einschätzen"
         ] %}
 
         {% for frage in fragen %}
         <div class="frageblock">
-            <label>{{ loop.index+5 }}. {{ frage }}</label>
+            <label>{{ loop.index+6 }}. {{ frage }}</label>
             <div class="likert">
                 <label><input type="radio" name="frage{{ loop.index }}" value="1" required>1<br>stimme überhaupt nicht zu</label>
                 <label><input type="radio" name="frage{{ loop.index }}" value="2">2</label>
@@ -149,23 +173,31 @@
         {% endfor %}
 
         <div class="frageblock">
-            <label for="vorgehen">18. Wie bist du beim Lösen der Rätsel vorgegangen? (Beispiel: „Ich habe mir zuerst alle Elemente angeschaut und versucht, ein Muster zu erkennen. Danach habe ich Schritt für Schritt mögliche Kombinationen ausprobiert.“ / „Ich habe intuitiv geraten und dann versucht, über Ausschluss die richtige Lösung zu finden.“ / „Ich habe versucht, das Problem in kleinere Teilaufgaben zu zerlegen.“)</label>
-            <textarea name="vorgehen" id="vorgehen" rows="4" required style="width:100%;"></textarea>
+            <label for="vorgehen">20. Wie bist du beim Lösen des Rätsels konkret vorgegangen? (Beispiel: „Ich habe mir zuerst alle Elemente angeschaut und versucht, ein Muster zu erkennen. Danach habe ich Schritt für Schritt mögliche Kombinationen ausprobiert.“ / „Ich habe intuitiv geraten und dann versucht, über Ausschluss die richtige Lösung zu finden.“ / „Ich habe versucht, das Problem in kleinere Teilaufgaben zu zerlegen.“)</label>
+            <small>Beispiel: „Ich habe zuerst die Steintafel mit dem Runenalphabet gesucht, danach die Runenabfolge im Holz verglichen und mit den Symbolen auf den Goldmünzen kombiniert.“
+                    Oder: „Ich habe mir zuerst den Text im Holz angeschaut und versucht, damit die Bedeutung der Symbole zu entschlüsseln.“
+                    Oder: „Ich habe verschiedene Runen ausprobiert, die ich für richtig hielt, bis der Code stimmte.“</small>
+            <textarea name="vorgehen" id="vorgehen" rows="6" required style="width:100%;"></textarea>
         </div>
 
         <div class="frageblock">
-            <label for="kommunikation">19. Wie hast du die Kommunikation mit dem Chatbot erlebt? (z.B. distanziert, hilfreich, störend, sympathisch,…)</label>
-            <textarea name="kommunikation" id="kommunikation" rows="4" required style="width:100%;"></textarea>
+            <label for="interaktion">21. Welche Rolle hatte der Chatbot für dich beim Rätsel lösen? </label>
+            <small>Beispiel: „Der Chatbot hat mir geholfen, zu verstehen, welche Hinweise wichtig sind und wie sie zusammenhängen - z.B. dass der Texthinweis mit den Symbolen auf den Runenabfolgen kombiniert werden muss.“
+                Oder: „Ich habe immer erst den Bot gefragt, bevor ich selbst nachgedacht habe.“
+                Oder: „Ich habe den Chatbot fast gar nicht gebraucht.“
+                Oder: „Die Hinweise vom Bot haben meine Vermutungen bestätigt – z.B. dass die Symbole auf den Goldmünzen wichtig sind.“</small>
+            <textarea name="interaktion" id="interaktion" rows="6" required style="width:100%;"></textarea>
+        </div>
+
+
+        <div class="frageblock">
+            <label for="kommunikation">22. Gab es etwas, das dir beim Lösen besonders geholfen oder dich gestört hat?</label>
+            <textarea name="kommunikation" id="kommunikation" rows="6" style="width:100%;"></textarea>
         </div>
 
         <div class="frageblock">
-            <label for="interaktion">20. Wie hat die Interaktion mit dem Chatbot deine Herangehensweise an die Aufgabe beeinflusst? (Beispiel: „Der Chatbot hat mir einen Denkanstoß gegeben, durch den ich meinen Lösungsweg geändert habe.“ / „Seine Hinweise haben meine Vermutung bestätigt, also bin ich bei meiner Strategie geblieben.“ / „Ich habe mich durch die Art der Hinweise verunsichert gefühlt und wusste nicht, wie ich weitermachen soll.“)</label>
-            <textarea name="interaktion" id="interaktion" rows="4" required style="width:100%;"></textarea>
-        </div>
-
-        <div class="frageblock">
-            <label for="feedback">21. Möchtest du sonst noch etwas mitteilen?</label>
-            <textarea name="feedback" id="feedback" rows="4" style="width:100%;"></textarea>
+            <label for="feedback">23. Möchtest du sonst noch etwas mitteilen?</label>
+            <textarea name="feedback" id="feedback" rows="6" style="width:100%;"></textarea>
         </div>
 
 
