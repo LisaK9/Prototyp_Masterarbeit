@@ -1,4 +1,4 @@
-const  correctCode = [9, 2];
+const  correctCode = [9];
 
 let currentRiddle = 1;
 let allowPageUnload = false; // Standardmäßig keine Erlaubnis zum Verlassen
