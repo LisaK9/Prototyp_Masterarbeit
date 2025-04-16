@@ -131,7 +131,7 @@ def create_app():
                             )
                         ''')
             cur.execute('''
-                        CREATE TABLE IF NOT EXISTS survey_n (
+                        CREATE TABLE IF NOT EXISTS survey_n2 (
                             id SERIAL PRIMARY KEY,
                             session_id TEXT,
                             alter TEXT,
@@ -141,7 +141,7 @@ def create_app():
                             chatbot TEXT,
                             frage1 INTEGER, frage2 INTEGER, frage3 INTEGER, frage4 INTEGER, frage5 INTEGER,
                             frage6 INTEGER, frage7 INTEGER, frage8 INTEGER, frage9 INTEGER, frage10 INTEGER,
-                            frage11 INTEGER, frage12 INTEGER, frage13 INTEGER, feedback TEXT,
+                            frage11 INTEGER, frage12 INTEGER, frage13 INTEGER, frage14 INTEGER, frage15 INTEGER, feedback TEXT,
                             loesungsweg TEXT,
                             kommunikation TEXT,
                             interaktion TEXT,
@@ -357,7 +357,7 @@ def create_app():
         chatbot = request.form.get("chatbot_nutzung")
 
         # Likert-Fragen (1–20)
-        likert_responses = [request.form.get(f"frage{i}") for i in range(1, 14)]
+        likert_responses = [request.form.get(f"frage{i}") for i in range(1, 16)]
 
         # Freitextantworten
         feedback = request.form.get("feedback")
@@ -370,13 +370,13 @@ def create_app():
 
         # SQL-Insert
         cur.execute(f'''
-            INSERT INTO survey_n (
+            INSERT INTO survey_n2 (
                 session_id, alter, geschlecht, bildung, exitgame, chatbot,
-                {', '.join([f"frage{i}" for i in range(1, 14)])},
+                {', '.join([f"frage{i}" for i in range(1, 16)])},
                 feedback, loesungsweg, kommunikation, interaktion
             ) VALUES (
                 %s, %s, %s, %s, %s, %s,
-                {', '.join(['%s'] * 13)},
+                {', '.join(['%s'] * 15)},
                 %s, %s, %s, %s
             )
         ''', (
