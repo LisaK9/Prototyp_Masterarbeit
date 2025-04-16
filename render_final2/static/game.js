@@ -398,7 +398,13 @@ document.querySelector('.scroll-icon').addEventListener('click', function() {
         popup.style.display = 'flex'; // Popup anzeigen
     }
 });
-
+// Funktion zum Scrollen zum unteren Ende des Lösungspopups
+function scrollToSolutionBottom() {
+    const popup = document.getElementById('lösungpopup');
+    if (popup) {
+        popup.scrollTop = popup.scrollHeight;
+    }
+}
 document.getElementById('lösung-button').addEventListener('click', function () {
     if (botRequestCounts[currentRiddle] >= 3) {
 
@@ -458,6 +464,9 @@ document.getElementById('lösung-button').addEventListener('click', function () 
                 console.log('Lösungsstatus gespeichert:', data);
             })
             .catch(error => console.error('Fehler beim Speichern des Lösungsstatus:', error));
+
+            // Automatisch nach unten scrollen, damit der neueste Inhalt sichtbar ist
+            setTimeout(scrollToSolutionBottom, 100); // Mit kurzer Verzögerung, um sicherzustellen, dass alles im DOM ist
         }
 
     } else {
@@ -546,6 +555,8 @@ document.getElementById('lösung-next-button').addEventListener('click', functio
         if (solutionStepShown === steps.length - 1) {
             this.style.display = 'none'; // Letzter Schritt erreicht
         }
+        // Nach unten scrollen, damit der Benutzer immer den neuesten Schritt sieht
+        scrollToSolutionBottom();
     }
 });
 
