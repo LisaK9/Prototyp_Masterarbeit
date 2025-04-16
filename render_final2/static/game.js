@@ -230,6 +230,11 @@ document.querySelectorAll('#code-input input').forEach(input => {
             checkDigit();
         }
     });
+    codeInput.addEventListener('input', function () {
+        if (this.value.length === 1) {
+            checkDigit();
+        }
+    });
 });
 
 // Funktion, um Feedback vom Chatbot anzuzeigen, wenn ein Rätsel gelöst wurde

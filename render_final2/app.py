@@ -363,7 +363,8 @@ def create_app():
 
         # SQL-Insert
         cur.execute(f'''
-                INSERT INTO survey2 (
+                INSERT INTO survey2
+                 (
                     session_id, alter, geschlecht, bildung, exitgame, chatbot,
                     {', '.join([f"frage{i}" for i in range(1, 16)])},
                     feedback, loesungsweg, kommunikation, interaktion
