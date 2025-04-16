@@ -227,12 +227,13 @@ document.addEventListener('DOMContentLoaded', function() {
     chatWindow.scrollTop = chatWindow.scrollHeight;
 });
 
+const codeInput = document.getElementById('code-digit-1');
 // Event-Listener für die Eingabefelder, um die Entertaste zu unterstützen
 document.querySelectorAll('#code-input input').forEach(input => {
-    input.addEventListener('keydown', function(event) {
+    codeInput.addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
-            checkDigit(); // eingegebene Zahl prüfen
+            checkDigit();
         }
     });
     codeInput.addEventListener('input', function () {
@@ -240,7 +241,9 @@ document.querySelectorAll('#code-input input').forEach(input => {
             checkDigit();
         }
     });
+
 });
+
 
 // Funktion, um Feedback vom Chatbot anzuzeigen, wenn ein Rätsel gelöst wurde
 function sendChatbotFeedback(riddleNumber) {

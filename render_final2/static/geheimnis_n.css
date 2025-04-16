@@ -20,7 +20,8 @@ html, body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
     scrollbar-color: rgba(0, 0, 0, 0) transparent;
 }
 
