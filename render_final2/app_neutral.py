@@ -182,86 +182,11 @@ def create_app():
 
 
 
-    def generate_verification_code():
-        return ''.join(random.choices(string.digits, k=6))
 
-    # Route für die E-Mail-Verifizierung
-
-    @app.route('/verify_email', methods=['GET', 'POST'])
-    def verify_email():
-        if request.method == 'POST':
-            email = request.form['email']
-            code = generate_verification_code()
-            session['email'] = email
-
-            # Session initialisieren, falls noch nicht geschehen
-            if 'initialized' not in session:
-                session['initialized'] = True
-            session_id = session.sid
-
-            # Code, die E-Mail und die Session-ID in der Datenbank speichern
-            conn = get_db_connection()
-            cur = conn.cursor()
-            cur.execute('INSERT INTO verification_n (email, code, session_id) VALUES (%s, %s, %s)',
-                            (email, code, session_id))
-            conn.commit()
-            cur.close()
-            conn.close()
-
-            # E-Mail mit SendGrid versenden
-            message = Mail(
-                from_email='exitgame_masterarbeit@web.de',
-                to_emails=email,
-                subject='Dein Bestätigungscode',
-                plain_text_content=f'Dein Bestätigungscode lautet: {code}'
-            )
-            try:
-                response = sg.send(message)
-                flash('Ein Bestätigungscode wurde an deine E-Mail-Adresse gesendet. Bitte überprüfe auch deinen SPAM-Ordner.')
-            except Exception as e:
-                flash('Fehler beim Senden der E-Mail. Bitte versuche es später erneut.')
-                print(str(e))
-
-            return redirect(url_for('verify_code'))
-
-        return render_template('index_verify.html')
-
-    # Route für die Code-Verifizierung
-    @app.route('/verify_code', methods=['GET', 'POST'])
-    def verify_code():
-        if request.method == 'POST':
-            email = request.form['email']
-            code = request.form['code']
-            session_id = session.sid
-
-            # Code und die Session-ID in der Datenbank prüfen
-            conn = get_db_connection()
-            cur = conn.cursor()
-            cur.execute('''
-                        SELECT code FROM verification_n 
-                        WHERE email = %s AND session_id = %s 
-                        ORDER BY created_at DESC LIMIT 1
-                    ''', (email, session_id))
-            result = cur.fetchone()
-            cur.close()
-            conn.close()
-
-            if result and result[0] == code:
-                session['verified'] = True  # Verifizierungsstatus in der Session setzen
-                flash('E-Mail erfolgreich verifiziert!')
-                return redirect(url_for('index'))
-            else:
-                flash('Ungültiger Bestätigungscode. Bitte versuche es erneut.')
-        else:
-            email = session.get('email', '')
-
-        return render_template('verify.html', email=email)
 
     @app.route("/")
     def index():
-        # Überprüfen, ob der Benutzer verifiziert ist
-        if not session.get('verified'):
-            return redirect(url_for('verify_email'))  # Weiterleitung zur Verifizierung
+
         if session.get("survey_completed"):
             return render_template('danke.html')
         session.permanent = True  # Hält die Session aktiv
